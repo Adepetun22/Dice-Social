@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Open Sans:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Open Sans', sans-serif;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@layer components {
+  .notification-badge {
+    @apply bg-[#FFD700] text-[#1D1D1D];
+  }
+
+  .notification-badge-text {
+    @apply text-[#1D1D1D];
+  }
+
+  /* React Hot Toast responsive fix */
+  ._rht_toaster {
+    @apply md:!right-8;
+  }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
