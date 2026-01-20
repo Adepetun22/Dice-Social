@@ -6,16 +6,16 @@ import ConnectsSuggestion from "../../components/DashboardCCC/NewsFeed/ConnectsS
 
 const NewsFeed = () => {
   return (
-    <div className="lg:py-8 px-4">
+    <div className="lg:py-8 px-4 bg-white">
       <div className="grid lg:grid-cols-4 grid-cols-1 gap-4">
-        <div className="lg:col-span-3 col-span-4">
+        <div className="col-span-4 lg:col-span-1 order-first lg:order-last">
+          <ConnectsSuggestion />
+        </div>
+        <div className="lg:col-span-3 col-span-4 order-last lg:order-first">
           <CreatePost />
 
           <SuggestionCard />
           <PostCard />
-        </div>
-        <div className="col-span-4 lg:col-span-1">
-          <ConnectsSuggestion />
         </div>
       </div>
     </div>

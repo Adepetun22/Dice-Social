@@ -20,7 +20,7 @@ const ContactComponent = ({ contact, avatar, onClick, showStatusImage, showCheck
       )}
       
       <div className={`${showCheckbox ? 'ml-8' : ''} mr-3`}>
-        <div className="bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12 flex items-center justify-center">
+        <div className="bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
           <img className="w-12 h-12 rounded-xl object-cover" src={avatar} alt={contact.name} />
         </div>
         {showStatusImage && (
@@ -33,6 +33,7 @@ const ContactComponent = ({ contact, avatar, onClick, showStatusImage, showCheck
           <div className="font-medium truncate">{contact.name}</div>
           <div className="text-xs text-gray-500">12:40 PM</div>
         </div>
+        <div className="text-xs text-gray-500 mb-1">{contact.type}</div>
         <div className="text-sm text-gray-500 truncate">Okay wait a sec</div>
       </div>
     </div>

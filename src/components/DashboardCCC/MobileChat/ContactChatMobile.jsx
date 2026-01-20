@@ -116,7 +116,9 @@ const ContactChatMobile = ({ onContactSelect }) => {
               <div className="link-view-christian-nwabueze-s-graphic-link-margin mr-3">
                 <div className="link-view-christian-nwabueze-s-graphic-link">
                   <div className="container4">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12"></div>
+                    <div className="bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
+                      <img className="w-12 h-12 rounded-xl object-cover" src={`https://picsum.photos/seed/${contact.name.replace(/\s+/g, '').toLowerCase()}/200/200.jpg`} alt={contact.name} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -158,7 +160,7 @@ const ContactChatMobile = ({ onContactSelect }) => {
       
       {/* Contacts Modal */}
       {showContactsModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}>
           <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
             <button 
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"

@@ -6,6 +6,7 @@ import NewsFeed from './Pages/DashboardCCC/NewsFeed';
 import ChatRoomCCC from './Pages/DashboardCCC/ChatRoomCCC';
 import ChatCenter from './Pages/DashboardCCC/ChatCenter';
 import SupportPage from './Pages/DashboardCCC/Support';
+import ChatComponent from './components/ChatComponent';
 
 function App() {
   return (
@@ -14,14 +15,15 @@ function App() {
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header />
-          <main className="flex-1 overflow-y-auto p-4">
+          <main className="flex-1 overflow-y-auto">
             <Routes>
               <Route path="/" element={<NewsFeed />} />
               <Route path="/profile" element={<ProfileCCC />} />
               <Route path="/newsfeed" element={<NewsFeed />} />
               <Route path="/chatroom" element={<ChatRoomCCC />} />
-              <Route path="/chatcenter" element={<ChatCenter />} />
+              <Route path="/chatcenter" element={<div className="h-full overflow-hidden"><ChatCenter /></div>} />
               <Route path="/support" element={<SupportPage />} />
+              <Route path="/PCCSupport/ChatRoom" element={<ChatComponent />} />
             </Routes>
           </main>
         </div>

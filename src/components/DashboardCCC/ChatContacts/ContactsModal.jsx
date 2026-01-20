@@ -1,9 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import UsersThree from '../../../assets/users-three0.svg';
 import MagnifyingGlass from '../../../assets/magnifying-glass0.svg';
 import CaretDown from '../../../assets/caret-down0.svg';
-import CheckEngine from '../../../assets/check-engine0.svg';
-import ArrowRight from '../../../assets/ArrowRight.png';
+import ArrowRight from '../../../assets/arrow-right0.svg'; // 新增导入
 import Avatar1 from '../../../assets/view-christian-nwabueze-s-graphic-link0.png';
 import Avatar2 from '../../../assets/view-christian-nwabueze-s-graphic-link1.png';
 import Avatar3 from '../../../assets/view-christian-nwabueze-s-graphic-link2.png';
@@ -14,20 +12,16 @@ import Avatar7 from '../../../assets/view-christian-nwabueze-s-graphic-link6.png
 import Avatar8 from '../../../assets/view-christian-nwabueze-s-graphic-link7.png';
 import Avatar9 from '../../../assets/view-christian-nwabueze-s-graphic-link8.png';
 import ContactComponent from './ContactComponent';
-import CreateGroupPage from './CreateGroupPage';
 
 const ContactsModal = ({ onClose }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedMemberType, setSelectedMemberType] = useState('All Member');
   const [searchTerm, setSearchTerm] = useState('');
   const [showStatusImage, setShowStatusImage] = useState(false);
-  const [isCreatingGroup, setIsCreatingGroup] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [showArrow, setShowArrow] = useState(false);
-  const [showCreateGroupPage, setShowCreateGroupPage] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   
-  const memberTypes = ['All Member', 'Personal Customer', 'Acquaintance Customer'];
+  const memberTypes = ['All Member', 'Personal Customer', 'Acquaintance Customer', 'Business Rep', 'Customer Care'];
   
   const contacts = [
     { name: 'Esther Howard', type: 'Personal Customer', avatar: Avatar1 },
@@ -36,9 +30,9 @@ const ContactsModal = ({ onClose }) => {
     { name: 'Jenny Wilson', type: 'Acquaintance Customer', avatar: Avatar4 },
     { name: 'Jerome Bell', type: 'Personal Customer', avatar: Avatar5 },
     { name: 'Arlene McCoy', type: 'Acquaintance Customer', avatar: Avatar6 },
-    { name: 'Savannah Nguyen', type: 'Guy Hawkins', avatar: Avatar7 },
-    { name: 'Theresa Webb', type: 'Guy Hawkins', avatar: Avatar8 },
-    { name: 'Bessie Cooper', type: 'Guy Hawkins', avatar: Avatar9 }
+    { name: 'Savannah Nguyen', type: 'Business Rep', avatar: Avatar7 },
+    { name: 'Theresa Webb', type: 'Customer Care', avatar: Avatar8 },
+    { name: 'Bessie Cooper', type: 'Business Rep', avatar: Avatar9 }
   ];
 
   // Filter contacts based on selected member type and search term
@@ -60,10 +54,8 @@ const ContactsModal = ({ onClose }) => {
     return result;
   }, [selectedMemberType, searchTerm]);
 
-  // Reset group creation state when switching member types
+  // Reset selected contacts when switching member types
   useEffect(() => {
-    setIsCreatingGroup(false);
-    setShowArrow(false);
     setSelectedContacts([]);
   }, [selectedMemberType]);
 
@@ -132,42 +124,26 @@ const ContactsModal = ({ onClose }) => {
             </div>
           )}
         </div>
+        
+        {/* Select All/Unselect All Button */}
+        <div className="mt-3">
+          <button
+            className="w-full py-2 bg-yellow-400 text-black rounded-md text-sm hover:bg-black hover:text-yellow-400 transition-colors"
+            onClick={() => {
+              if (selectedContacts.length === filteredContacts.length) {
+                // Unselect all
+                setSelectedContacts([]);
+              } else {
+                // Select all visible contacts
+                setSelectedContacts(filteredContacts.map(contact => contact.name));
+              }
+            }}
+          >
+            {selectedContacts.length === filteredContacts.length ? 'Unselect All' : 'Select All'}
+          </button>
+        </div>
       </div>
 
-      {/* Create Group Button - Hide when "All Member" is selected, show for others */}
-      {selectedMemberType !== 'All Member' && (
-        <button 
-          className="bg-white border-b border-neutral-300 px-5 py-4 flex flex-row gap-2 items-center justify-start flex-shrink-0 w-full relative text-left"
-          style={{ height: '90px' }}
-          onClick={() => {
-            setIsCreatingGroup(!isCreatingGroup);
-            setShowArrow(!showArrow);
-          }}
-        >
-          <div className="flex flex-row gap-0 items-center justify-start flex-shrink-0 w-[247px] relative overflow-hidden">
-            <div className="p-0.5 flex flex-col gap-0 items-start justify-start flex-shrink-0 w-12 h-12 relative">
-              <div className="flex flex-col gap-0 items-start justify-start self-stretch flex-shrink-0 h-12 relative">
-                <img 
-                  className="rounded-[70px] flex flex-col gap-2.5 items-center justify-center flex-shrink-0 w-12 h-12 relative overflow-visible object-cover" 
-                  src={UsersThree} 
-                  alt="Create Group" 
-                />
-              </div>
-            </div>
-            <div className="pl-2 flex flex-col gap-0 items-start justify-center self-stretch flex-1 relative">
-              <div className="p-0.5 flex flex-col gap-0 items-start justify-center self-stretch flex-shrink-0 h-[51px] relative overflow-hidden">
-                <div className="self-stretch flex-shrink-0 h-5 relative">
-                  <div className="flex flex-col gap-0 items-start justify-start absolute left-0 top-0 overflow-hidden">
-                    <div className="text-black text-left text-base leading-5 font-bold relative flex items-center justify-start">
-                      Create Group
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </button>
-      )}
 
       {/* Contacts List */}
       <div className="overflow-y-auto flex-grow">
@@ -189,44 +165,32 @@ const ContactsModal = ({ onClose }) => {
                 Avatar9
               }
               onClick={() => {
-                if (isCreatingGroup) {
-                  // Toggle contact selection
-                  if (selectedContacts.includes(contact.name)) {
-                    setSelectedContacts(selectedContacts.filter(name => name !== contact.name));
-                  } else {
-                    setSelectedContacts([...selectedContacts, contact.name]);
-                  }
+                // Toggle contact selection
+                if (selectedContacts.includes(contact.name)) {
+                  setSelectedContacts(selectedContacts.filter(name => name !== contact.name));
                 } else {
-                  console.log('Contact clicked:', contact.name);
+                  setSelectedContacts([...selectedContacts, contact.name]);
                 }
               }}
               showStatusImage={showStatusImage}
-              showCheckbox={isCreatingGroup}
+              showCheckbox={true} // Always show checkboxes
               isChecked={selectedContacts.includes(contact.name)}
             />
           ))}
         </div>
       </div>
       
-      {/* Arrow Right Button - Show only when Create Group is clicked */}
-      {showArrow && (
+      {/* Arrow Right Button - Show when any contacts are selected */}
+      {selectedContacts.length > 0 && (
         <div className="fixed bottom-[98px] left-1/2 transform -translate-x-1/2 z-50">
           <img 
-            className="w-12 h-12 rounded-full object-cover cursor-pointer"
+            className="w-12 h-12 rounded-full bg-yellow-400 object-cover cursor-pointer"
             src={ArrowRight}
             alt="Arrow Right"
             onClick={() => {
-              if (selectedContacts.length >= 2) {
-                // Navigate to CreateGroupPage
-                setShowCreateGroupPage(true);
-              } else {
-                // Show notification
-                setShowNotification(true);
-                // Hide notification after 3 seconds
-                setTimeout(() => {
-                  setShowNotification(false);
-                }, 3000);
-              }
+              // Handle the selected contacts (initiate chat)
+              console.log('Selected contacts:', selectedContacts);
+              // Here you would typically initiate the chat with the selected contacts
             }}
           />
         </div>
@@ -239,14 +203,6 @@ const ContactsModal = ({ onClose }) => {
         </div>
       )}
       
-      {/* Create Group Page Modal */}
-      {showCreateGroupPage && (
-        <CreateGroupPage 
-          isOpen={showCreateGroupPage}
-          onClose={() => setShowCreateGroupPage(false)}
-          groupType={selectedMemberType}
-        />
-      )}
     </div>
   );
 };

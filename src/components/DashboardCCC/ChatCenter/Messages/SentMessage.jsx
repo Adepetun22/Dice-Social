@@ -167,7 +167,18 @@ const SentMessage = forwardRef(({
           </div>
         )}
         
-        <div className="message-bubble-2 bg-blue-500 text-white rounded-2xl rounded-tr-none p-3 max-w-md overflow-hidden" style={{backgroundColor: '#FFF9E6', color: '#000'}}>
+        <div 
+          className="message-bubble-2 bg-blue-500 text-white rounded-2xl rounded-tr-none p-3 max-w-[303.52px] overflow-hidden" 
+          style={{backgroundColor: '#FFF9E6', color: '#000'}}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            setIsHovered(true);
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            setTimeout(() => setIsHovered(false), 1000);
+          }}
+        >
           {renderMediaContent()}
         </div>
         {messageStatus && (

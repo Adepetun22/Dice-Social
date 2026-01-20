@@ -14,6 +14,7 @@ const ChatCenter = () => {
   const [showReceivedMessageDropdown, setShowReceivedMessageDropdown] = useState(null);
   const [showSentMessageDropdown, setShowSentMessageDropdown] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContactDetails, setSelectedContactDetails] = useState(null); // Added state for contact details
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showAttachmentOptions, setShowAttachmentOptions] = useState(false);
@@ -70,8 +71,10 @@ const ChatCenter = () => {
     { id: 5, name: "Sarah Davis", time: "Monday", message: "Call me when you're free", unreadCount: 0, category: "Acquaintance Customer" },
     { id: 6, name: "Robert Miller", time: "Monday", message: "Can we reschedule?", unreadCount: 1, category: "Personal Customer" },
     { id: 7, name: "Jennifer Wilson", time: "Sunday", message: "Happy birthday!", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Personal Customer" },
-    { id: 9, name: "Lisa Anderson", time: "Saturday", message: "Great job on the presentation", unreadCount: 0, category: "Acquaintance Customer" }
+    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Business Rep" },
+    { id: 9, name: "Lisa Anderson", time: "Saturday", message: "Great job on the presentation", unreadCount: 0, category: "Customer Care" },
+    { id: 10, name: "James Wilson", time: "Friday", message: "Looking forward to our meeting", unreadCount: 0, category: "Business Rep" },
+    { id: 11, name: "Patricia Johnson", time: "Friday", message: "Thanks for your assistance", unreadCount: 1, category: "Customer Care" }
   ];
 
   // Function to handle emoji selection
@@ -234,7 +237,11 @@ const ChatCenter = () => {
 
   // Handle contact selection
   const handleContactSelect = (contactId) => {
+    // Find the selected contact's details
+    const contactDetails = contacts.find(contact => contact.id === contactId);
     setSelectedContact(contactId);
+    setSelectedContactDetails(contactDetails); // Store the contact details
+    
     // In mobile view, hide contacts list and show chat room
     if (isMobileView) {
       setShowChatRoom(true);
@@ -244,6 +251,7 @@ const ChatCenter = () => {
   // Handle back button in mobile view
   const handleBackToContacts = () => {
     setShowChatRoom(false);
+    setSelectedContactDetails(null); // Clear the contact details
   };
 
   // Render mobile view
@@ -265,7 +273,10 @@ const ChatCenter = () => {
             showChatRoom && selectedContact !== null ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <ChatRoomMobile onBack={handleBackToContacts} />
+          <ChatRoomMobile 
+            onBack={handleBackToContacts} 
+            contactDetails={selectedContactDetails} 
+          />
         </div>
       </div>
     );
@@ -273,11 +284,12 @@ const ChatCenter = () => {
 
   // Desktop view (existing implementation)
   return (
-    <div className="ccc-chatroom flex h-screen bg-gray-50">
+    <div className="ccc-chatroom flex h-screen bg-gray-50 overflow-hidden">
       {/* Contacts Modal */}
       {showContactsModal && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 flex items-center justify-center z-50"
+          style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}
           onClick={() => setShowContactsModal(false)}
         >
           <div className="relative" onClick={(e) => e.stopPropagation()}>
@@ -370,7 +382,8 @@ const ChatCenter = () => {
                 } else if (activeFilter === 'unread') {
                   if (contact.unreadCount <= 0) return false;
                 } else if (activeFilter === 'groups') {
-                  if (contact.category !== 'Acquaintance Customer') return false;
+                  // Consider non-Personal Customer categories as groups
+                  if (contact.category === 'Personal Customer') return false;
                 }
                 
                 // Apply search filter
@@ -401,8 +414,8 @@ const ChatCenter = () => {
       </div>
       
       {/* Main Chat Area */}
-      <div className="chatroom flex-1 flex flex-col" style={{ height: '100vh', overflow: 'hidden' }}>
-        <div className="frame-2147224876 flex flex-col flex-1 min-h-0">
+      <div className="chatroom flex-1 flex flex-col" style={{ height: '100vh' }}>
+        <div className="frame-2147224876 flex flex-col flex-1 min-h-0 overflow-hidden">
           {/* Chat Header */}
           <ChatHeader 
             onBack={() => console.log("Back button clicked")}

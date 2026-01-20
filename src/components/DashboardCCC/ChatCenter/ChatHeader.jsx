@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HeaderOption from './ChatOption/HeaderOption';
 
-const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true }) => {
+const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true, memberType = "Personal Customer" }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -41,7 +41,9 @@ const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true }) => 
           <div className="link-view-christian-nwabueze-s-graphic-link-margin">
             <div className="link-view-christian-nwabueze-s-graphic-link">
               <div className="container relative">
-                <div className="view-christian-nwabueze-s-graphic-link bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12"></div>
+                <div className="view-christian-nwabueze-s-graphic-link bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
+                  <img className="w-12 h-12 rounded-xl object-cover" src="https://picsum.photos/seed/savannah/200/200.jpg" alt={userName} />
+                </div>
                 <div className="ellipse-16813 absolute w-3 h-3 bg-green-500 rounded-full" style={{ bottom: '0px', right: '0px' }}></div>
               </div>
             </div>
@@ -52,6 +54,7 @@ const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true }) => 
                 <div className="container2">
                   <div className="savannah-nguyen font-medium">{userName}</div>
                 </div>
+                <div className="text-xs text-gray-500">{memberType}</div>
               </div>
               <div className="frame-2147224224">
                 <div className="container8">

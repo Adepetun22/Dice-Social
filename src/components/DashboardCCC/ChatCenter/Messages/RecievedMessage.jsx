@@ -135,8 +135,18 @@ const RecievedMessage = forwardRef(({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="frame-2147224238 flex">
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl mr-2 self-end" style={{ 
+        <div 
+          className="frame-2147224238 flex"
+          onTouchStart={(e) => {
+            e.preventDefault();
+            setIsHovered(true);
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            setTimeout(() => setIsHovered(false), 1000);
+          }}
+        >
+          <div className="bg-gray-200 rounded-xl mr-2 self-end flex items-center justify-center" style={{ 
             width: '32px', 
             height: '32px', 
             minWidth: '32px',
@@ -146,7 +156,9 @@ const RecievedMessage = forwardRef(({
             flexShrink: 0,
             flexGrow: 0,
             flexBasis: '32px'
-          }} />
+          }}>
+            <img className="w-full h-full rounded-xl object-cover" src="https://picsum.photos/seed/receiver/200/200.jpg" alt="Receiver" />
+          </div>
           <div className="message-bubble bg-white rounded-2xl rounded-tl-none p-3 max-w-md overflow-hidden">
             {renderMediaContent()}
           </div>

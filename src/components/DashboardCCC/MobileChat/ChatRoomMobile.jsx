@@ -5,7 +5,7 @@ import RecievedMessage from '../ChatCenter/Messages/RecievedMessage';
 import SentMessage from '../ChatCenter/Messages/SentMessage';
 import HeaderOption from '../ChatCenter/ChatOption/HeaderOption';
 
-const ChatRoomMobile = ({ onBack }) => {
+const ChatRoomMobile = ({ onBack, contactDetails = null }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showAttachmentOptions, setShowAttachmentOptions] = useState(false);
   const [showHeaderOptions, setShowHeaderOptions] = useState(false);
@@ -244,7 +244,9 @@ const ChatRoomMobile = ({ onBack }) => {
             <div className="link-view-christian-nwabueze-s-graphic-link-margin">
               <div className="link-view-christian-nwabueze-s-graphic-link">
                 <div className="container relative">
-                  <div className="view-christian-nwabueze-s-graphic-link bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12"></div>
+                  <div className="view-christian-nwabueze-s-graphic-link bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
+                    <img className="w-12 h-12 rounded-xl object-cover" src="https://picsum.photos/seed/savannah/200/200.jpg" alt="Savannah Nguyen" />
+                  </div>
                   <div className="ellipse-16813 absolute w-3 h-3 bg-green-500 rounded-full" style={{ bottom: '0px', right: '0px' }}></div>
                 </div>
               </div>
@@ -253,7 +255,8 @@ const ChatRoomMobile = ({ onBack }) => {
               <div className="container11">
                 <div className="container">
                   <div className="container2">
-                    <div className="savannah-nguyen font-medium">Savannah Nguyen</div>
+                    <div className="savannah-nguyen font-medium">{contactDetails ? contactDetails.name : "Savannah Nguyen"}</div>
+                    <div className="text-xs text-gray-500">{contactDetails ? contactDetails.category || "Personal Customer" : "Personal Customer"}</div>
                   </div>
                 </div>
                 <div className="frame-2147224224">
@@ -356,7 +359,7 @@ const ChatRoomMobile = ({ onBack }) => {
         
         {/* Input Area */}
         <div 
-          className="frame-2147224246 bg-white p-4 border-t border-gray-200"
+          className="frame-2147224246 bg-white p-[10px] border-t border-gray-200"
           style={{ backgroundColor: 'rgb(255, 249, 230)', marginBottom: '60px' }}
         >
           {/* Display attached files */}
@@ -489,7 +492,7 @@ const ChatRoomMobile = ({ onBack }) => {
             <input 
               ref={messageInputRef}
               type="text" 
-              className="type-a-message-here flex-1 mx-4 px-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none" 
+              className="type-a-message-here flex-1 mx-[10px] px-[10px] py-2 bg-gray-100 rounded-full text-sm focus:outline-none" 
               placeholder="Type a message here..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}

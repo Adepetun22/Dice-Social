@@ -19,7 +19,9 @@ const ContactMessage = ({
       <div className="link-view-christian-nwabueze-s-graphic-link-margin mr-3">
         <div className="link-view-christian-nwabueze-s-graphic-link">
           <div className="container4">
-            <div className="bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12"></div>
+            <div className="bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
+              <img className="w-12 h-12 rounded-xl object-cover" src={`https://picsum.photos/seed/${name.replace(/\s+/g, '').toLowerCase()}/200/200.jpg`} alt={name} />
+            </div>
           </div>
         </div>
       </div>

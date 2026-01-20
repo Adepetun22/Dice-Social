@@ -22,7 +22,7 @@ const SupportPage = () => {
       title="Support"
       onTicketSubmit={handleTicketSubmit}
       onViewTicket={handleViewTicket}
-      showCreateTicketButton={false}
+      showCreateTicketButton={true}
     />
   );
 };

@@ -48,7 +48,7 @@ const CreatePost = () => {
 
       {/* Full Post Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}>
           <div className="bg-white rounded-lg shadow-xl w-full max-w-xl p-5 relative">
             {/* Close button */}
             <button 
