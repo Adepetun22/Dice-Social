@@ -211,8 +211,8 @@ const PostCard = () => {
             {showReactionsPicker && (
               <ReactionsPicker 
                 onReactionSelect={handleReactionSelect}
-                positionClass="bottom-10"
-                marginLeft="-80px"
+                positionClass="bottom-10 left-[calc(50%-8px)] sm:left-1/2 transform sm:-translate-x-1/2"
+                marginLeft="0px"
               />
             )}
           </div>
