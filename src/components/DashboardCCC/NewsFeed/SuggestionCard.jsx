@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaThumbsUp, FaRegComment, FaRetweet, FaTimes } from "react-icons/fa";
+import { FaThumbsUp, FaRegComment, FaRetweet, FaPaperPlane } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag, FiTrash2 } from "react-icons/fi";
+import EmojiPicker from "../EmojiPicker";
+import ReactionsPicker from "../ReactionsPicker";
+import Comment from "./Comment";
 
 import Avatar from "../../../assets/Avatar.png";
 import Freezer from "../../../assets/Freezer.png";
@@ -9,13 +12,34 @@ import { MdAddBox } from "react-icons/md";
 
 const SuggestionCard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showReactionsPicker, setShowReactionsPicker] = useState(false);
+  const [_selectedReaction, setSelectedReaction] = useState(null);
+  const [reactions, setReactions] = useState({
+    '👍': 0,
+    '👎': 0,
+    '❤️': 0,
+    '😂': 0,
+    '😮': 0,
+    '😢': 0,
+    '😡': 0,
+    '🎉': 0,
+    '🔥': 0,
+    '💯': 0,
+  });
   const dropdownRef = useRef(null);
+  const likeButtonRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
+      }
+      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
+        setShowReactionsPicker(false);
       }
     };
 
@@ -32,7 +56,40 @@ const SuggestionCard = () => {
   const handleMenuAction = (action) => {
     console.log(`${action} clicked`);
     setShowDropdown(false);
-    // Add your action handlers here
+  };
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    if (newComment.trim() !== "") {
+      setComments([...comments, newComment]);
+      setNewComment("");
+      setShowCommentInput(false);
+    }
+  };
+
+  const handleEmojiClick = (emoji) => {
+    setNewComment(newComment + emoji);
+  };
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+  };
+
+  const toggleReactionsPicker = (e) => {
+    e.stopPropagation();
+    setShowReactionsPicker(!showReactionsPicker);
+  };
+
+  const handleReactionSelect = (emoji) => {
+    setSelectedReaction(emoji);
+    setReactions((prev) => ({
+      ...prev,
+      [emoji]: (prev[emoji] || 0) + 1,
+    }));
+    setShowReactionsPicker(false);
   };
 
   return (
@@ -40,8 +97,42 @@ const SuggestionCard = () => {
       <div className="bg-white w-full rounded-lg shadow p-4 space-y-4">
         <div className="inline-flex items-center justify-between border-b w-full pb-2">
           <p className="text-sm text-gray-400">Suggested</p>
-          <FaTimes className="cursor-pointer text-gray-500" />
+          <div className="relative" ref={dropdownRef}>
+            <BsThreeDots
+              className="text-xl text-gray-500 cursor-pointer hover:text-gray-700"
+              onClick={handleDropdownToggle}
+            />
+
+            {showDropdown && (
+              <div className="absolute right-0 top-6 text-[10px] w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
+                <button
+                  onClick={() => handleMenuAction("Copy link to post")}
+                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
+                >
+                  <FiLink className="text-gray-500" />
+                  Copy link to post
+                </button>
+
+                <button
+                  onClick={() => handleMenuAction("Unfollow Courtney Henry")}
+                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
+                >
+                  <FiUserX className="text-gray-500" />
+                  Unfollow
+                </button>
+
+                <button
+                  onClick={() => handleMenuAction("Report Post")}
+                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
+                >
+                  <FiFlag className="text-gray-500" />
+                  Report Post
+                </button>
+              </div>
+            )}
+          </div>
         </div>
+
         {/* Post Header */}
         <div className="flex justify-between items-start">
           <div className="flex gap-3 items-center">
@@ -58,7 +149,7 @@ const SuggestionCard = () => {
             </div>
           </div>
 
-          {/* Three Dots Menu */}
+          {/* Connect Button */}
           <p className="text-xs font-bold inline-flex items-center cursor-pointer">
             <MdAddBox className="mr-1 text-base" /> Connect
           </p>
@@ -82,16 +173,44 @@ const SuggestionCard = () => {
 
         {/* Reactions */}
         <div className="flex justify-between text-sm text-gray-500">
-          <p>👍❤️ 36</p>
-          <p>8 comments</p>
+          <p className="flex items-center gap-1">
+            {Object.values(reactions).reduce((a, b) => a + b, 0) === 0 ? (
+              <span>👍</span>
+            ) : (
+              Object.entries(reactions)
+                .filter(([emoji, count]) => emoji !== '👍' && count > 0)
+                .slice(0, 5)
+                .map(([emoji]) => (
+                  <span key={emoji}>{emoji}</span>
+                ))
+            )}
+            {Object.entries(reactions).filter(([emoji, count]) => emoji !== '👍' && count > 0).length > 5 && (
+              <span className="flex items-center justify-center w-5 h-5 bg-gray-100 rounded-full text-xs">+</span>
+            )}
+            {Object.values(reactions).reduce((a, b) => a + b, 0)}
+          </p>
+          <p>{comments.length} comments</p>
         </div>
 
         {/* Actions */}
-        <div className="flex justify-around border-t border-b py-2 text-gray-700 text-sm font-medium">
-          <button className="flex items-center gap-2 hover:text-blue-600">
-            <FaThumbsUp /> Like
-          </button>
-          <button className="flex items-center gap-2 hover:text-blue-600">
+        <div className="flex justify-around border-t border-b py-2 text-gray-700 text-sm font-medium relative">
+          <div className="relative" ref={likeButtonRef}>
+            <button 
+              className="flex items-center gap-2 hover:text-blue-600"
+              onClick={toggleReactionsPicker}
+            >
+              <FaThumbsUp />
+              Like
+            </button>
+            {showReactionsPicker && (
+              <ReactionsPicker 
+                onReactionSelect={handleReactionSelect}
+                positionClass="bottom-10 left-[calc(50%-8px)] sm:left-1/2 transform sm:-translate-x-1/2"
+                marginLeft="0px"
+              />
+            )}
+          </div>
+          <button className="flex items-center gap-2 hover:text-blue-600" onClick={() => setShowCommentInput(true)}>
             <FaRegComment /> Comment
           </button>
           <button className="flex items-center gap-2 hover:text-blue-600">
@@ -99,30 +218,47 @@ const SuggestionCard = () => {
           </button>
         </div>
 
-        {/* Comment */}
-        <div className="flex gap-3 mt-3">
-          <img
-            src={Avatar}
-            alt="User"
-            className="w-9 h-9 rounded-full object-cover"
-          />
-          <div>
-            <h3 className="font-semibold text-gray-800">Annette Black</h3>
-            <p className="text-sm text-gray-500">Personal Customer</p>
-            <p className="text-gray-700 mt-1 text-sm">
-              Seeing the deep freezer, makes me want to have it already. Super
-              cool breakdown! 🔥 Replit really is underrated, excited for the
-              full comparison!
-            </p>
-            <div className="flex gap-4 mt-1 text-sm text-gray-500">
-              <button className="hover:underline">Like</button>
-              <button className="hover:underline">Reply</button>
-            </div>
+        {/* Comment Input */}
+        {showCommentInput && (
+          <div className="flex gap-3 mt-3 relative">
+            <input
+              type="text"
+              value={newComment}
+              onChange={handleCommentChange}
+              placeholder="Write a comment..."
+              className="border rounded-md p-2 flex-grow"
+              onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}
+            />
+            <button onClick={toggleEmojiPicker} className="hover:text-blue-600">
+              😊
+            </button>
+            <button 
+              onClick={handleCommentSubmit} 
+              className="hover:text-blue-600"
+              disabled={!newComment.trim()}
+            >
+              <FaPaperPlane />
+            </button>
+            {showEmojiPicker && (
+              <EmojiPicker onEmojiSelect={(emoji) => handleEmojiClick(emoji)} positionClass="bottom-10 right-0" marginLeft="0px" />
+            )}
           </div>
-        </div>
+        )}
+
+        {/* Comments Display */}
+        {comments.map((comment, index) => (
+          <Comment
+            key={index}
+            avatar={Avatar}
+            name="Annette Black"
+            userType="Personal Customer"
+            content={comment}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
 export default SuggestionCard;
+
