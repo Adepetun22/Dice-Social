@@ -176,13 +176,16 @@ const PostCard = () => {
         {/* Reactions */}
         <div className="flex justify-between text-sm text-gray-500">
           <p className="flex items-center gap-1">
-            <span>👍</span>
-            {Object.entries(reactions)
-              .filter(([emoji, count]) => emoji !== '👍' && count > 0)
-              .slice(0, 5)
-              .map(([emoji]) => (
-                <span key={emoji}>{emoji}</span>
-              ))}
+            {Object.values(reactions).reduce((a, b) => a + b, 0) === 0 ? (
+              <span>👍</span>
+            ) : (
+              Object.entries(reactions)
+                .filter(([emoji, count]) => emoji !== '👍' && count > 0)
+                .slice(0, 5)
+                .map(([emoji]) => (
+                  <span key={emoji}>{emoji}</span>
+                ))
+            )}
             {Object.entries(reactions).filter(([emoji, count]) => emoji !== '👍' && count > 0).length > 5 && (
               <span className="flex items-center justify-center w-5 h-5 bg-gray-100 rounded-full text-xs">+</span>
             )}
