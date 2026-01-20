@@ -2,12 +2,17 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaThumbsUp, FaRegComment, FaRetweet } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag, FiTrash2 } from "react-icons/fi";
+import EmojiPicker from "../EmojiPicker"; // Importing the EmojiPicker component
 
 import Avatar from "../../../assets/Avatar.png";
 import Freezer from "../../../assets/Freezer.png";
 
 const PostCard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [comments, setComments] = useState([]); // State to hold comments
+  const [newComment, setNewComment] = useState(""); // State for new comment input
+  const [showCommentInput, setShowCommentInput] = useState(false); // State to toggle comment input visibility
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State to toggle emoji picker visibility
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -32,6 +37,26 @@ const PostCard = () => {
     console.log(`${action} clicked`);
     setShowDropdown(false);
     // Add your action handlers here
+  };
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    if (newComment.trim() !== "") {
+      setComments([...comments, newComment]);
+      setNewComment("");
+      setShowCommentInput(false); // Hide comment input after submission
+    }
+  };
+
+  const handleEmojiClick = (emoji) => {
+    setNewComment(newComment + emoji);
+  };
+
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
   };
 
   return (
@@ -91,7 +116,7 @@ const PostCard = () => {
                   onClick={() => handleMenuAction("Delete")}
                   className="flex items-center gap-3 w-full px-4 py-2  text-red-600 hover:bg-red-50"
                 >
-                  <FiTrash2 className="text-red-500" />
+                  <FiTrash2 className="text-red-600" />
                   Delete
                 </button>
               </div>
@@ -126,7 +151,7 @@ const PostCard = () => {
           <button className="flex items-center gap-2 hover:text-blue-600">
             <FaThumbsUp /> Like
           </button>
-          <button className="flex items-center gap-2 hover:text-blue-600">
+          <button className="flex items-center gap-2 hover:text-blue-600" onClick={() => setShowCommentInput(true)}>
             <FaRegComment /> Comment
           </button>
           <button className="flex items-center gap-2 hover:text-blue-600">
@@ -134,27 +159,42 @@ const PostCard = () => {
           </button>
         </div>
 
-        {/* Comment */}
-        <div className="flex gap-3 mt-3">
-          <img
-            src={Avatar}
-            alt="User"
-            className="w-9 h-9 rounded-full object-cover"
-          />
-          <div>
-            <h3 className="font-semibold text-gray-800">Annette Black</h3>
-            <p className="text-sm text-gray-500">Personal Customer</p>
-            <p className="text-gray-700 mt-1 text-sm">
-              Seeing the deep freezer, makes me want to have it already. Super
-              cool breakdown! 🔥 Replit really is underrated, excited for the
-              full comparison!
-            </p>
-            <div className="flex gap-4 mt-1 text-sm text-gray-500">
-              <button className="hover:underline">Like</button>
-              <button className="hover:underline">Reply</button>
+        {/* Comment Input */}
+        {showCommentInput && (
+          <div className="flex gap-3 mt-3 relative">
+            <input
+              type="text"
+              value={newComment}
+              onChange={handleCommentChange}
+              placeholder="Write a comment..."
+              className="border rounded-md p-2 flex-grow"
+            />
+            <button onClick={toggleEmojiPicker} className="hover:text-blue-600">
+              😊
+            </button>
+            {showEmojiPicker && (
+              <EmojiPicker onEmojiSelect={(emoji) => handleEmojiClick(emoji)} positionClass="bottom-10 left-0" marginLeft="-220px" />
+            )}
+          </div>
+        )}
+
+        {/* Comments Display */}
+        {comments.map((comment, index) => (
+          <div key={index} className="flex gap-3 mt-3">
+            <img
+              src={Avatar}
+              alt="User"
+              className="w-9 h-9 rounded-full object-cover"
+            />
+            <div>
+              <h3 className="font-semibold text-gray-800">Annette Black</h3>
+              <p className="text-sm text-gray-500">Personal Customer</p>
+              <p className="text-gray-700 mt-1 text-sm">
+                {comment}
+              </p>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
