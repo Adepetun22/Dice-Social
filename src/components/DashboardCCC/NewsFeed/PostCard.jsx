@@ -3,6 +3,7 @@ import { FaThumbsUp, FaRegComment, FaRetweet } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag, FiTrash2 } from "react-icons/fi";
 import EmojiPicker from "../EmojiPicker"; // Importing the EmojiPicker component
+import ReactionsPicker from "../ReactionsPicker"; // Importing the ReactionsPicker component
 
 import Avatar from "../../../assets/Avatar.png";
 import Freezer from "../../../assets/Freezer.png";
@@ -13,13 +14,19 @@ const PostCard = () => {
   const [newComment, setNewComment] = useState(""); // State for new comment input
   const [showCommentInput, setShowCommentInput] = useState(false); // State to toggle comment input visibility
   const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State to toggle emoji picker visibility
+  const [showReactionsPicker, setShowReactionsPicker] = useState(false); // State to toggle reactions picker visibility
+  const [selectedReaction, setSelectedReaction] = useState(null); // State to track selected reaction emoji
   const dropdownRef = useRef(null);
+  const likeButtonRef = useRef(null);
 
-  // Close dropdown when clicking outside
+  // Close dropdown and reactions picker when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
+      }
+      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
+        setShowReactionsPicker(false);
       }
     };
 
@@ -57,6 +64,16 @@ const PostCard = () => {
 
   const toggleEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker);
+  };
+
+  const toggleReactionsPicker = (e) => {
+    e.stopPropagation();
+    setShowReactionsPicker(!showReactionsPicker);
+  };
+
+  const handleReactionSelect = (emoji) => {
+    setSelectedReaction(emoji);
+    setShowReactionsPicker(false);
   };
 
   return (
@@ -147,10 +164,27 @@ const PostCard = () => {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-around border-t border-b py-2 text-gray-700 text-sm font-medium">
-          <button className="flex items-center gap-2 hover:text-blue-600">
-            <FaThumbsUp /> Like
-          </button>
+        <div className="flex justify-around border-t border-b py-2 text-gray-700 text-sm font-medium relative">
+          <div className="relative" ref={likeButtonRef}>
+            <button 
+              className="flex items-center gap-2 hover:text-blue-600"
+              onClick={toggleReactionsPicker}
+            >
+              {selectedReaction ? (
+                <span className="text-xl">{selectedReaction}</span>
+              ) : (
+                <FaThumbsUp />
+              )}
+              Like
+            </button>
+            {showReactionsPicker && (
+              <ReactionsPicker 
+                onReactionSelect={handleReactionSelect}
+                positionClass="bottom-10"
+                marginLeft="-80px"
+              />
+            )}
+          </div>
           <button className="flex items-center gap-2 hover:text-blue-600" onClick={() => setShowCommentInput(true)}>
             <FaRegComment /> Comment
           </button>
