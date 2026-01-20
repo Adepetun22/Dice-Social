@@ -173,7 +173,7 @@ const PostCard = () => {
               😊
             </button>
             {showEmojiPicker && (
-              <EmojiPicker onEmojiSelect={(emoji) => handleEmojiClick(emoji)} positionClass="bottom-10 left-0" marginLeft="-220px" />
+              <EmojiPicker onEmojiSelect={(emoji) => handleEmojiClick(emoji)} positionClass="bottom-10 right-0" marginLeft="0px" />
             )}
           </div>
         )}
