@@ -634,7 +634,7 @@ const ChatCenter = () => {
                 
                 {/* Emoji Picker */}
                 {showEmojiPicker && (
-                  <EmojiPicker onEmojiSelect={handleEmojiSelect} />
+                  <EmojiPicker onEmojiSelect={handleEmojiSelect} marginLeft="-250px" />
                 )}
               </div>
               <button 
