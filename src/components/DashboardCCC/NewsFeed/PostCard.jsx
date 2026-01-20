@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaThumbsUp, FaRegComment, FaRetweet } from "react-icons/fa";
+import { FaThumbsUp, FaRegComment, FaRetweet, FaPaperPlane } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag, FiTrash2 } from "react-icons/fi";
 import EmojiPicker from "../EmojiPicker"; // Importing the EmojiPicker component
 import ReactionsPicker from "../ReactionsPicker"; // Importing the ReactionsPicker component
+import Comment from "./Comment"; // Importing the Comment component
 
 import Avatar from "../../../assets/Avatar.png";
 import Freezer from "../../../assets/Freezer.png";
@@ -229,9 +230,17 @@ const PostCard = () => {
               onChange={handleCommentChange}
               placeholder="Write a comment..."
               className="border rounded-md p-2 flex-grow"
+              onKeyPress={(e) => e.key === 'Enter' && handleCommentSubmit()}
             />
             <button onClick={toggleEmojiPicker} className="hover:text-blue-600">
               😊
+            </button>
+            <button 
+              onClick={handleCommentSubmit} 
+              className="hover:text-blue-600"
+              disabled={!newComment.trim()}
+            >
+              <FaPaperPlane />
             </button>
             {showEmojiPicker && (
               <EmojiPicker onEmojiSelect={(emoji) => handleEmojiClick(emoji)} positionClass="bottom-10 right-0" marginLeft="0px" />
@@ -241,20 +250,13 @@ const PostCard = () => {
 
         {/* Comments Display */}
         {comments.map((comment, index) => (
-          <div key={index} className="flex gap-3 mt-3">
-            <img
-              src={Avatar}
-              alt="User"
-              className="w-9 h-9 rounded-full object-cover"
-            />
-            <div>
-              <h3 className="font-semibold text-gray-800">Annette Black</h3>
-              <p className="text-sm text-gray-500">Personal Customer</p>
-              <p className="text-gray-700 mt-1 text-sm">
-                {comment}
-              </p>
-            </div>
-          </div>
+          <Comment
+            key={index}
+            avatar={Avatar}
+            name="Annette Black"
+            userType="Personal Customer"
+            content={comment}
+          />
         ))}
       </div>
     </div>
