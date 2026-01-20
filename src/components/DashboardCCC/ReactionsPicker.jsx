@@ -25,7 +25,7 @@ const ReactionsPicker = ({ onReactionSelect, positionClass = "bottom-8 left-0", 
           <button
             key={reaction.label}
             onClick={() => onReactionSelect(reaction.emoji)}
-            className="text-2xl hover:scale-125 transition-transform duration-150 cursor-pointer p-1 rounded-full hover:bg-gray-100"
+            className="text-2xl hover:scale-150 hover:z-10 transform transition-transform duration-150 cursor-pointer p-1 rounded-full hover:bg-gray-100"
             title={reaction.label}
           >
             {reaction.emoji}
