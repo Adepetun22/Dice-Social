@@ -16,6 +16,18 @@ const PostCard = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State to toggle emoji picker visibility
   const [showReactionsPicker, setShowReactionsPicker] = useState(false); // State to toggle reactions picker visibility
   const [selectedReaction, setSelectedReaction] = useState(null); // State to track selected reaction emoji
+  const [reactions, setReactions] = useState({
+    '👍': 0,
+    '👎': 0,
+    '❤️': 0,
+    '😂': 0,
+    '😮': 0,
+    '😢': 0,
+    '😡': 0,
+    '🎉': 0,
+    '🔥': 0,
+    '💯': 0,
+  }); // State to track reaction counts
   const dropdownRef = useRef(null);
   const likeButtonRef = useRef(null);
 
@@ -73,6 +85,10 @@ const PostCard = () => {
 
   const handleReactionSelect = (emoji) => {
     setSelectedReaction(emoji);
+    setReactions((prev) => ({
+      ...prev,
+      [emoji]: (prev[emoji] || 0) + 1,
+    }));
     setShowReactionsPicker(false);
   };
 
@@ -159,7 +175,19 @@ const PostCard = () => {
 
         {/* Reactions */}
         <div className="flex justify-between text-sm text-gray-500">
-          <p>👍❤️ 36</p>
+          <p className="flex items-center gap-1">
+            <span>👍</span>
+            {Object.entries(reactions)
+              .filter(([emoji, count]) => emoji !== '👍' && count > 0)
+              .slice(0, 5)
+              .map(([emoji]) => (
+                <span key={emoji}>{emoji}</span>
+              ))}
+            {Object.entries(reactions).filter(([emoji, count]) => emoji !== '👍' && count > 0).length > 5 && (
+              <span className="flex items-center justify-center w-5 h-5 bg-gray-100 rounded-full text-xs">+</span>
+            )}
+            {Object.values(reactions).reduce((a, b) => a + b, 0)}
+          </p>
           <p>8 comments</p>
         </div>
 
