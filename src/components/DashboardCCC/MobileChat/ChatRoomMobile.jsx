@@ -520,7 +520,7 @@ const ChatRoomMobile = ({ onBack, contactDetails = null }) => {
                 {/* Emoji Picker */}
                 {showEmojiPicker && (
                   <div className="absolute bottom-12 left-0">
-                    <EmojiPicker onEmojiSelect={handleEmojiSelect} />
+                    <EmojiPicker onEmojiSelect={handleEmojiSelect} marginLeft="-250px" />
                   </div>
                 )}
               </div>
