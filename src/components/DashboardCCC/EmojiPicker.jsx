@@ -1,25 +1,22 @@
 import PropTypes from 'prop-types';
+import EmojiPickerReact from 'emoji-picker-react';
 
 const EmojiPicker = ({ onEmojiSelect, positionClass = "bottom-8 left-0", marginLeft = "-220px" }) => {
-  // Common emojis for the picker
-  const emojis = [
-    '😀', '😂', '😍', '🥰', '😎', '🤩', '🥳', '😭', '😡', '🤯', 
-    '🥶', '😱', '👍', '👎', '❤️', '🔥', '💯', '✨', '👏', '🙏'
-  ];
-
   return (
-    <div className={`absolute ${positionClass} bg-white rounded-lg shadow-lg p-2 w-64`} style={{ marginLeft: marginLeft }}>
-      <div className="grid grid-cols-8 gap-1">
-        {emojis.map((emoji, index) => (
-          <button
-            key={index}
-            className="text-xl p-1 hover:bg-gray-100 rounded"
-            onClick={() => onEmojiSelect(emoji)}
-            style={{ background: 'none', border: 'none' }}
-          >
-            {emoji}
-          </button>
-        ))}
+    <div className={`absolute ${positionClass} z-50`} style={{ marginLeft: marginLeft }}>
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <EmojiPickerReact
+          onEmojiClick={(emoji) => {
+            onEmojiSelect(emoji.emoji);
+          }}
+          skinTonePickerLocation="permanent"
+          height={400}
+          width={320}
+          previewConfig={{
+            showPreview: false,
+          }}
+          searchPlaceHolder="Search emoji..."
+        />
       </div>
     </div>
   );
@@ -32,3 +29,4 @@ EmojiPicker.propTypes = {
 };
 
 export default EmojiPicker;
+
