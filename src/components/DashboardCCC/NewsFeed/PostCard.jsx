@@ -201,11 +201,7 @@ const PostCard = () => {
               className="flex items-center gap-2 hover:text-blue-600"
               onClick={toggleReactionsPicker}
             >
-              {selectedReaction ? (
-                <span className="text-xl">{selectedReaction}</span>
-              ) : (
-                <FaThumbsUp />
-              )}
+              <FaThumbsUp />
               Like
             </button>
             {showReactionsPicker && (
