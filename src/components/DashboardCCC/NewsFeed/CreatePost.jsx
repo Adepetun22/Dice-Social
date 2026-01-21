@@ -44,6 +44,8 @@ const CreatePost = ({ onPostSubmit }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setMediaPreview(reader.result);
+        // Open modal after file is selected
+        setIsModalOpen(true);
       };
       reader.readAsDataURL(file);
     }
@@ -127,10 +129,19 @@ const CreatePost = ({ onPostSubmit }) => {
           />
         </div>
         <hr />
+        {/* Hidden file input */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileSelect}
+          accept="image/*,video/*"
+          className="hidden"
+        />
+
         {/* Photo/Video button */}
         <button 
           className="flex items-center gap-2 text-yellow-500 font-medium hover:bg-yellow-50 px-3 py-2 rounded"
-          onClick={() => setIsModalOpen(true)}
+          onClick={openFilePicker}
         >
           <MdPhoto className="text-xl" />
           Photo/Video
@@ -227,15 +238,6 @@ const CreatePost = ({ onPostSubmit }) => {
                     <EmojiPicker onEmojiSelect={handleEmojiSelect} marginLeft="0px" />
                   )}
                 </div>
-
-                {/* Hidden file input */}
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileSelect}
-                  accept="image/*,video/*"
-                  className="hidden"
-                />
 
                 {/* Photo/Video button */}
                 <button 
