@@ -5,7 +5,7 @@ import EmojiPicker from "../EmojiPicker";
 
 import { BsEmojiSmile } from "react-icons/bs";
 
-const CreatePost = () => {
+const CreatePost = ({ onPostSubmit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [postContent, setPostContent] = useState("");
@@ -61,15 +61,28 @@ const CreatePost = () => {
   // Function to handle post submission
   const handlePost = () => {
     if (postContent.trim() || selectedMedia) {
-      console.log('Posting:', {
+      const postData = {
         content: postContent,
-        media: selectedMedia
-      });
+        media: selectedMedia,
+        mediaPreview: mediaPreview,
+        author: {
+          name: "Fatimah Oladigbolu",
+          type: "Personal Customer",
+          avatar: Avatar,
+        },
+      };
+
+      // Call the callback if provided
+      if (onPostSubmit) {
+        onPostSubmit(postData);
+      }
+
       // Reset form after post
       setPostContent("");
       setSelectedMedia(null);
       setMediaPreview(null);
       setIsModalOpen(false);
+      setShowEmojiPicker(false);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -79,6 +92,15 @@ const CreatePost = () => {
   // Open file picker
   const openFilePicker = () => {
     fileInputRef.current.click();
+  };
+
+  // Reset form when closing modal without posting
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setPostContent("");
+    setSelectedMedia(null);
+    setMediaPreview(null);
+    setShowEmojiPicker(false);
   };
 
   return (
@@ -121,24 +143,14 @@ const CreatePost = () => {
           style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              setIsModalOpen(false);
-              setPostContent("");
-              setSelectedMedia(null);
-              setMediaPreview(null);
-              setShowEmojiPicker(false);
+              closeModal();
             }
           }}
         >
           <div className="bg-white rounded-lg shadow-xl w-full max-w-xl p-5 relative">
             {/* Close button */}
             <button 
-              onClick={() => {
-                setIsModalOpen(false);
-                setPostContent("");
-                setSelectedMedia(null);
-                setMediaPreview(null);
-                setShowEmojiPicker(false);
-              }}
+              onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
