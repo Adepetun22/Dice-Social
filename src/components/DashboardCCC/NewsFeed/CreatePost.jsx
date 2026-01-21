@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MdPhoto } from "react-icons/md";
 import Avatar from "../../../assets/Avatar.png";
 import EmojiPicker from "../EmojiPicker";
@@ -12,11 +12,26 @@ const CreatePost = () => {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
   const fileInputRef = useRef(null);
+  const emojiPickerRef = useRef(null);
+
+  // Close emoji picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Function to handle emoji selection
   const handleEmojiSelect = (emoji) => {
     setPostContent(prev => prev + emoji);
-    setShowEmojiPicker(false);
+    // Keep emoji picker open for multiple selections
   };
 
   // Function to handle file selection
@@ -110,6 +125,7 @@ const CreatePost = () => {
               setPostContent("");
               setSelectedMedia(null);
               setMediaPreview(null);
+              setShowEmojiPicker(false);
             }
           }}
         >
@@ -121,6 +137,7 @@ const CreatePost = () => {
                 setPostContent("");
                 setSelectedMedia(null);
                 setMediaPreview(null);
+                setShowEmojiPicker(false);
               }}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
@@ -155,25 +172,25 @@ const CreatePost = () => {
 
             {/* Media Preview */}
             {mediaPreview && (
-              <div className="relative mt-4">
+              <div className="relative mt-4 w-24 h-24">
                 {selectedMedia?.type.startsWith('video/') ? (
                   <video 
                     src={mediaPreview} 
-                    className="w-full rounded-lg max-h-64 object-cover"
+                    className="w-full h-full rounded-lg object-cover"
                     controls
                   />
                 ) : (
                   <img 
                     src={mediaPreview} 
                     alt="Preview" 
-                    className="w-full rounded-lg max-h-64 object-cover"
+                    className="w-full h-full rounded-lg object-cover"
                   />
                 )}
                 <button
                   onClick={removeMedia}
-                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full p-1 hover:bg-opacity-70"
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -183,7 +200,7 @@ const CreatePost = () => {
             {/* Action row */}
             <div className="flex items-center justify-between mt-4">
               <div className="flex gap-4">
-                <div className="relative">
+                <div className="relative" ref={emojiPickerRef}>
                   <button 
                     className="text-xl text-gray-600 cursor-pointer"
                     style={{ background: 'none', border: 'none', padding: 0 }}
