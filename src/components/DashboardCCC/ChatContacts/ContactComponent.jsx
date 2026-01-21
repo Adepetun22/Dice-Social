@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactComponent = ({ contact, avatar, onClick, showStatusImage, showCheckbox, isChecked }) => {
+const ContactComponent = ({ contact, onClick, showStatusImage, showCheckbox, isChecked }) => {
   return (
     <div 
       className="flex items-center p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer relative"
@@ -21,7 +21,7 @@ const ContactComponent = ({ contact, avatar, onClick, showStatusImage, showCheck
       
       <div className={`${showCheckbox ? 'ml-8' : ''} mr-3`}>
         <div className="bg-gray-200 rounded-xl w-12 h-12 flex items-center justify-center">
-          <img className="w-12 h-12 rounded-xl object-cover" src={avatar} alt={contact.name} />
+          <img className="w-12 h-12 rounded-xl object-cover" src={`https://picsum.photos/seed/${contact.name.replace(/\s+/g, '').toLowerCase()}/200/200.jpg`} alt={contact.name} />
         </div>
         {showStatusImage && (
           <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>

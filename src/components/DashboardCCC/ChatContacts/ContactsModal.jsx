@@ -150,20 +150,9 @@ const ContactsModal = ({ onClose }) => {
         <div className="flex flex-col">
           {/* Contacts */}
           {filteredContacts.map((contact, index) => (
-            <ContactComponent 
+            <ContactComponent
               key={index}
               contact={contact}
-              avatar={
-                contact.name === 'Esther Howard' ? Avatar1 :
-                contact.name === 'Devon Lane' ? Avatar2 :
-                contact.name === 'Brooklyn Simmons' ? Avatar3 :
-                contact.name === 'Jenny Wilson' ? Avatar4 :
-                contact.name === 'Jerome Bell' ? Avatar5 :
-                contact.name === 'Arlene McCoy' ? Avatar6 :
-                contact.name === 'Savannah Nguyen' ? Avatar7 :
-                contact.name === 'Theresa Webb' ? Avatar8 :
-                Avatar9
-              }
               onClick={() => {
                 // Toggle contact selection
                 if (selectedContacts.includes(contact.name)) {
