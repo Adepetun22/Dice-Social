@@ -7,6 +7,7 @@ import ChatRoomCCC from './Pages/DashboardCCC/ChatRoomCCC';
 import ChatCenter from './Pages/DashboardCCC/ChatCenter';
 import SupportPage from './Pages/DashboardCCC/Support';
 import ChatComponent from './components/ChatComponent';
+import OtherUserProfileHeader from './components/DashboardCCC/Profile/OtherUserProfileHeader';
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
               <Route path="/profile" element={<ProfileCCC />} />
               <Route path="/newsfeed" element={<NewsFeed />} />
               <Route path="/chatroom" element={<ChatRoomCCC />} />
-              <Route path="/chatcenter" element={<div className="h-full overflow-hidden"><ChatCenter /></div>} />
+              <Route path="/chatcenter" element={<ChatCenter />} />
               <Route path="/support" element={<SupportPage />} />
               <Route path="/PCCSupport/ChatRoom" element={<ChatComponent />} />
+              <Route path="/other-user-profile" element={<OtherUserProfileHeader />} />
             </Routes>
           </main>
         </div>
