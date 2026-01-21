@@ -60,7 +60,8 @@ const CreatePost = ({ onPostSubmit }) => {
 
   // Function to handle post submission
   const handlePost = () => {
-    if (postContent.trim() || selectedMedia) {
+    // User cannot post media without text or emoji
+    if (postContent.trim() || !selectedMedia) {
       const postData = {
         content: postContent,
         media: selectedMedia,
@@ -259,12 +260,12 @@ const CreatePost = ({ onPostSubmit }) => {
               </div>
               <button
                 className={`px-4 py-2 rounded ${
-                  postContent.trim() || selectedMedia
+                  postContent.trim() || !selectedMedia
                     ? 'bg-yellow-400 text-black hover:bg-black hover:text-yellow-400'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
                 onClick={handlePost}
-                disabled={!postContent.trim() && !selectedMedia}
+                disabled={!postContent.trim() && selectedMedia}
               >
                 Post
               </button>
