@@ -163,11 +163,11 @@ const SuggestionCard = () => {
         </p>
 
         {/* Image */}
-        <div>
+        <div className="flex justify-center items-center">
           <img
             src={Freezer}
             alt="Deep Freezer"
-            className="w-full rounded-lg object-cover"
+            className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
           />
         </div>
 

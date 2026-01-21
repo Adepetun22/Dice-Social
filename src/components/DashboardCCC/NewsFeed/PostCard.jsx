@@ -184,19 +184,19 @@ const PostCard = ({ post }) => {
 
         {/* Media (Image or Video) */}
         {hasMedia && (
-          <div>
+          <div className="flex justify-center items-center">
             {post?.media?.type?.startsWith('video/') ? (
               <video
                 src={post.mediaPreview}
                 alt="Post media"
-                className="w-full rounded-lg object-cover"
+                className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
                 controls
               />
             ) : (
               <img
                 src={post.mediaPreview}
                 alt="Post media"
-                className="w-full rounded-lg object-cover"
+                className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
               />
             )}
           </div>
