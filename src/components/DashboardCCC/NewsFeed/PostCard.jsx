@@ -7,7 +7,6 @@ import ReactionsPicker from "../ReactionsPicker";
 import Comment from "./Comment";
 
 import Avatar from "../../../assets/Avatar.png";
-import Freezer from "../../../assets/Freezer.png";
 
 const PostCard = ({ post }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -108,7 +107,7 @@ const PostCard = ({ post }) => {
   // Use post data if available, otherwise use static data
   const author = post?.author || { name: "Courtney Henry", type: "Acquaintance Customer", avatar: Avatar };
   const content = post?.content || "We have available brand new Deep Freezer for sale that comes with 2 years warranty! Super cool breakdown! 🔥 Replit really is underrated , excited for the full comparison! ...more";
-  const mediaSrc = post?.mediaPreview || Freezer;
+  const hasMedia = post?.mediaPreview && post?.media;
   const timestamp = post?.timestamp;
 
   return (
@@ -184,18 +183,18 @@ const PostCard = ({ post }) => {
         )}
 
         {/* Media (Image or Video) */}
-        {mediaSrc && (
+        {hasMedia && (
           <div>
             {post?.media?.type?.startsWith('video/') ? (
               <video
-                src={mediaSrc}
+                src={post.mediaPreview}
                 alt="Post media"
                 className="w-full rounded-lg object-cover"
                 controls
               />
             ) : (
               <img
-                src={mediaSrc}
+                src={post.mediaPreview}
                 alt="Post media"
                 className="w-full rounded-lg object-cover"
               />
