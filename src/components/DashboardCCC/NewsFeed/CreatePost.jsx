@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { MdPhoto } from "react-icons/md";
 import Avatar from "../../../assets/Avatar.png";
 import EmojiPicker from "../EmojiPicker";
@@ -8,23 +8,73 @@ import { BsEmojiSmile } from "react-icons/bs";
 const CreatePost = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  
+  const [postContent, setPostContent] = useState("");
+  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
   // Function to handle emoji selection
   const handleEmojiSelect = (emoji) => {
-    // In a real implementation, this would insert the emoji into the textarea
-    console.log('Selected emoji:', emoji);
+    setPostContent(prev => prev + emoji);
     setShowEmojiPicker(false);
+  };
+
+  // Function to handle file selection
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedMedia(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMediaPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Function to remove selected media
+  const removeMedia = () => {
+    setSelectedMedia(null);
+    setMediaPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Function to handle post submission
+  const handlePost = () => {
+    if (postContent.trim() || selectedMedia) {
+      console.log('Posting:', {
+        content: postContent,
+        media: selectedMedia
+      });
+      // Reset form after post
+      setPostContent("");
+      setSelectedMedia(null);
+      setMediaPreview(null);
+      setIsModalOpen(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  // Open file picker
+  const openFilePicker = () => {
+    fileInputRef.current.click();
   };
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow p-4 w-full  mx-auto">
+      <div className="bg-white rounded-lg shadow p-4 w-full mx-auto">
         <h2 className="text-gray-800 font-semibold mb-4">Create a post</h2>
 
         <div className="flex items-start gap-3 mb-4">
           {/* Avatar */}
           <img
-            src={Avatar} // Replace with actual profile image path
+            src={Avatar}
             alt="Profile"
             className="w-10 h-10 rounded-full object-cover"
           />
@@ -40,7 +90,10 @@ const CreatePost = () => {
         </div>
         <hr />
         {/* Photo/Video button */}
-        <button className="flex items-center gap-2 text-yellow-500 font-medium hover:bg-yellow-50 px-3 py-2 rounded">
+        <button 
+          className="flex items-center gap-2 text-yellow-500 font-medium hover:bg-yellow-50 px-3 py-2 rounded"
+          onClick={() => setIsModalOpen(true)}
+        >
           <MdPhoto className="text-xl" />
           Photo/Video
         </button>
@@ -48,11 +101,27 @@ const CreatePost = () => {
 
       {/* Full Post Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}>
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center" 
+          style={{ backgroundColor: 'hsl(0deg 0% 0% / 40%)' }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsModalOpen(false);
+              setPostContent("");
+              setSelectedMedia(null);
+              setMediaPreview(null);
+            }
+          }}
+        >
           <div className="bg-white rounded-lg shadow-xl w-full max-w-xl p-5 relative">
             {/* Close button */}
             <button 
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => {
+                setIsModalOpen(false);
+                setPostContent("");
+                setSelectedMedia(null);
+                setMediaPreview(null);
+              }}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,8 +148,37 @@ const CreatePost = () => {
             <textarea
               rows="4"
               placeholder="What product do you want to talk about?"
+              value={postContent}
+              onChange={(e) => setPostContent(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-yellow-400 text-gray-800"
             />
+
+            {/* Media Preview */}
+            {mediaPreview && (
+              <div className="relative mt-4">
+                {selectedMedia?.type.startsWith('video/') ? (
+                  <video 
+                    src={mediaPreview} 
+                    className="w-full rounded-lg max-h-64 object-cover"
+                    controls
+                  />
+                ) : (
+                  <img 
+                    src={mediaPreview} 
+                    alt="Preview" 
+                    className="w-full rounded-lg max-h-64 object-cover"
+                  />
+                )}
+                <button
+                  onClick={removeMedia}
+                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full p-1 hover:bg-opacity-70"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            )}
 
             {/* Action row */}
             <div className="flex items-center justify-between mt-4">
@@ -99,11 +197,45 @@ const CreatePost = () => {
                     <EmojiPicker onEmojiSelect={handleEmojiSelect} marginLeft="0px" />
                   )}
                 </div>
-                <MdPhoto className="text-xl text-yellow-500 cursor-pointer hover:text-black" />
+
+                {/* Hidden file input */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileSelect}
+                  accept="image/*,video/*"
+                  className="hidden"
+                />
+
+                {/* Photo/Video button */}
+                <button 
+                  className="flex items-center gap-2 text-yellow-500 font-medium hover:bg-yellow-50 px-2 py-1 rounded"
+                  style={{ background: 'none', border: 'none' }}
+                  onClick={openFilePicker}
+                >
+                  <svg 
+                    stroke="currentColor" 
+                    fill="currentColor" 
+                    strokeWidth="0" 
+                    viewBox="0 0 24 24" 
+                    className="text-xl" 
+                    height="1em" 
+                    width="1em" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path>
+                  </svg>
+                </button>
               </div>
               <button
-                className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-black hover:text-yellow-400"
-                onClick={() => setIsModalOpen(false)}
+                className={`px-4 py-2 rounded ${
+                  postContent.trim() || selectedMedia
+                    ? 'bg-yellow-400 text-black hover:bg-black hover:text-yellow-400'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                onClick={handlePost}
+                disabled={!postContent.trim() && !selectedMedia}
               >
                 Post
               </button>
@@ -116,3 +248,4 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
+
