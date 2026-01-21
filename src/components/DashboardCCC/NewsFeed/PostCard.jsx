@@ -111,7 +111,7 @@ const PostCard = ({ post }) => {
   const timestamp = post?.timestamp;
 
   return (
-    <div className="py-8">
+    <div className="py-5">
       <div className="bg-white w-full rounded-lg shadow p-4 space-y-4">
         {/* Post Header */}
         <div className="flex justify-between items-start">
@@ -189,14 +189,14 @@ const PostCard = ({ post }) => {
               <video
                 src={post.mediaPreview}
                 alt="Post media"
-                className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
+                className="w-full h-[calc(100%-140px)] sm:w-[calc(100%-140px)] rounded-lg object-cover"
                 controls
               />
             ) : (
               <img
                 src={post.mediaPreview}
                 alt="Post media"
-                className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
+                className="w-full h-[calc(100%-140px)] sm:w-[calc(100%-140px)] rounded-lg object-cover"
               />
             )}
           </div>

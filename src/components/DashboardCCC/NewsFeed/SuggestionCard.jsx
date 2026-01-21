@@ -93,7 +93,7 @@ const SuggestionCard = () => {
   };
 
   return (
-    <div className="py-8">
+    <div className="py-5">
       <div className="bg-white w-full rounded-lg shadow p-4 space-y-4">
         <div className="inline-flex items-center justify-between border-b w-full pb-2">
           <p className="text-sm text-gray-400">Suggested</p>
@@ -167,7 +167,7 @@ const SuggestionCard = () => {
           <img
             src={Freezer}
             alt="Deep Freezer"
-            className="w-[calc(100%-140px)] h-[calc(100%-140px)] rounded-lg object-cover"
+            className="w-full h-[calc(100%-140px)] sm:w-[calc(100%-140px)] rounded-lg object-cover"
           />
         </div>
 
