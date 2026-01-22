@@ -12,25 +12,7 @@ import { MdAddBox } from "react-icons/md";
 
 const SuggestionCard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      content: "This is a great product! I bought one last month and it's been amazing.",
-      name: "Annette Black",
-      userType: "Personal Customer",
-      avatar: Avatar,
-      likedReaction: "❤️",
-      replies: [
-        {
-          id: 101,
-          content: "Thanks for the feedback! Glad you like it.",
-          name: "Courtney Henry",
-          avatar: Avatar,
-          likedReaction: null,
-        }
-      ]
-    }
-  ]);
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
