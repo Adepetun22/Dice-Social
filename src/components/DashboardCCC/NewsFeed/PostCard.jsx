@@ -17,14 +17,14 @@ const PostCard = ({ post }) => {
       name: "Annette Black",
       userType: "Personal Customer",
       avatar: Avatar,
-      liked: false,
+      likedReaction: "❤️",
       replies: [
         {
           id: 101,
           content: "Thanks for the feedback! Glad you like it.",
           name: "Courtney Henry",
           avatar: Avatar,
-          liked: false,
+          likedReaction: null,
         }
       ]
     }
@@ -97,22 +97,32 @@ const PostCard = ({ post }) => {
   };
 
   // Handle like on a comment or reply
-  const handleCommentLike = (commentId) => {
+  const handleCommentLike = (commentId, reaction = null) => {
     setComments(comments.map(comment => {
       if (comment.id === commentId) {
-        return { ...comment, liked: !comment.liked };
+        // Toggle the reaction - if same reaction, remove it; otherwise set new reaction
+        return { 
+          ...comment, 
+          likedReaction: comment.likedReaction === reaction ? null : reaction 
+        };
       }
       // Check replies recursively
       if (comment.replies && comment.replies.length > 0) {
         const updatedReplies = comment.replies.map(reply => {
           if (reply.id === commentId) {
-            return { ...reply, liked: !reply.liked };
+            return { 
+              ...reply, 
+              likedReaction: reply.likedReaction === reaction ? null : reaction 
+            };
           }
           // Check nested replies
           if (reply.replies && reply.replies.length > 0) {
             const nestedReplies = reply.replies.map(nestedReply => {
               if (nestedReply.id === commentId) {
-                return { ...nestedReply, liked: !nestedReply.liked };
+                return { 
+                  ...nestedReply, 
+                  likedReaction: nestedReply.likedReaction === reaction ? null : reaction 
+                };
               }
               return nestedReply;
             });
@@ -408,7 +418,7 @@ const PostCard = ({ post }) => {
             userType={comment.userType}
             content={comment.content}
             replies={comment.replies || []}
-            liked={comment.liked}
+            likedReaction={comment.likedReaction}
             onLike={handleCommentLike}
             onReply={handleCommentReply}
           />

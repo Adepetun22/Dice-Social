@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import { FaPaperPlane, FaHeart, FaRegHeart } from "react-icons/fa";
 import EmojiPicker from "../EmojiPicker";
+import ReactionsPicker from "../ReactionsPicker";
 
 const Comment = ({ 
   avatar, 
@@ -10,7 +10,7 @@ const Comment = ({
   content, 
   commentId,
   replies = [],
-  liked = false,
+  likedReaction = null,
   onLike,
   onReply,
   depth = 0
@@ -18,6 +18,22 @@ const Comment = ({
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [showReplyEmojiPicker, setShowReplyEmojiPicker] = useState(false);
+  const [showReactionsPicker, setShowReactionsPicker] = useState(false);
+  const likeButtonRef = useRef(null);
+
+  // Close reactions picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
+        setShowReactionsPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleReplySubmit = () => {
     if (replyText.trim() !== "" && onReply) {
@@ -30,6 +46,13 @@ const Comment = ({
   const handleReplyEmojiClick = (emoji) => {
     setReplyText(replyText + emoji);
     setShowReplyEmojiPicker(false);
+  };
+
+  const handleReactionSelect = (emoji) => {
+    if (onLike) {
+      onLike(commentId, emoji);
+    }
+    setShowReactionsPicker(false);
   };
 
   return (
@@ -49,22 +72,23 @@ const Comment = ({
           
           {/* Like and Reply buttons */}
           <div className="flex gap-4 mt-1 text-sm text-gray-500 pl-2">
-            <div className="relative">
+            <div className="relative" ref={likeButtonRef}>
               <button 
-                onClick={() => onLike && onLike(commentId)}
-                className={`flex items-center gap-2 ${liked ? 'text-red-500' : 'hover:text-blue-600'}`}
+                onClick={() => setShowReactionsPicker(!showReactionsPicker)}
+                className={`flex items-center gap-2 ${likedReaction ? 'text-blue-600' : 'hover:text-blue-600'}`}
               >
-                {liked ? (
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path>
-                  </svg>
-                ) : (
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path>
-                  </svg>
-                )}
-                Like
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path>
+                </svg>
+                {likedReaction ? likedReaction : 'Like'}
               </button>
+              {showReactionsPicker && (
+                <ReactionsPicker 
+                  onReactionSelect={handleReactionSelect}
+                  positionClass="bottom-6 left-0"
+                  marginLeft="0px"
+                />
+              )}
             </div>
             <button 
               onClick={() => setShowReplyInput(!showReplyInput)}
@@ -119,7 +143,7 @@ const Comment = ({
                   userType={reply.userType || "User"}
                   content={reply.content}
                   replies={reply.replies || []}
-                  liked={reply.liked || false}
+                  likedReaction={reply.likedReaction || null}
                   onLike={onLike}
                   onReply={onReply}
                   depth={depth + 1}
@@ -144,11 +168,11 @@ Comment.propTypes = {
     name: PropTypes.string,
     avatar: PropTypes.string,
     userType: PropTypes.string,
-    liked: PropTypes.bool,
+    likedReaction: PropTypes.string,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     replies: PropTypes.array,
   })),
-  liked: PropTypes.bool,
+  likedReaction: PropTypes.string,
   onLike: PropTypes.func,
   onReply: PropTypes.func,
   depth: PropTypes.number,
