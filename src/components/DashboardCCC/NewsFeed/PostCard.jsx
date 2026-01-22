@@ -96,17 +96,27 @@ const PostCard = ({ post }) => {
     }
   };
 
-  // Handle like on a comment
+  // Handle like on a comment or reply
   const handleCommentLike = (commentId) => {
     setComments(comments.map(comment => {
       if (comment.id === commentId) {
         return { ...comment, liked: !comment.liked };
       }
-      // Also check replies
-      if (comment.replies) {
+      // Check replies recursively
+      if (comment.replies && comment.replies.length > 0) {
         const updatedReplies = comment.replies.map(reply => {
           if (reply.id === commentId) {
             return { ...reply, liked: !reply.liked };
+          }
+          // Check nested replies
+          if (reply.replies && reply.replies.length > 0) {
+            const nestedReplies = reply.replies.map(nestedReply => {
+              if (nestedReply.id === commentId) {
+                return { ...nestedReply, liked: !nestedReply.liked };
+              }
+              return nestedReply;
+            });
+            return { ...reply, replies: nestedReplies };
           }
           return reply;
         });
@@ -116,21 +126,66 @@ const PostCard = ({ post }) => {
     }));
   };
 
-  // Handle reply to a comment
-  const handleCommentReply = (commentId, replyText) => {
+  // Handle reply to a comment or nested reply
+  const handleCommentReply = (parentId, replyText) => {
     setComments(comments.map(comment => {
-      if (comment.id === commentId) {
+      if (comment.id === parentId) {
+        // Reply directly to the comment
         const newReply = {
           id: Date.now(),
           content: replyText,
           name: "Annette Black",
           avatar: Avatar,
-          liked: false
+          liked: false,
+          replies: []
         };
         return { 
           ...comment, 
           replies: comment.replies ? [...comment.replies, newReply] : [newReply]
         };
+      }
+      // Check if replying to a reply
+      if (comment.replies && comment.replies.length > 0) {
+        const updatedReplies = comment.replies.map(reply => {
+          if (reply.id === parentId) {
+            // Reply to this reply
+            const newReply = {
+              id: Date.now(),
+              content: replyText,
+              name: "Annette Black",
+              avatar: Avatar,
+              liked: false,
+              replies: []
+            };
+            return { 
+              ...reply, 
+              replies: reply.replies ? [...reply.replies, newReply] : [newReply]
+            };
+          }
+          // Check nested replies
+          if (reply.replies && reply.replies.length > 0) {
+            const nestedReplies = reply.replies.map(nestedReply => {
+              if (nestedReply.id === parentId) {
+                const newReply = {
+                  id: Date.now(),
+                  content: replyText,
+                  name: "Annette Black",
+                  avatar: Avatar,
+                  liked: false,
+                  replies: []
+                };
+                return { 
+                  ...nestedReply, 
+                  replies: nestedReply.replies ? [...nestedReply.replies, newReply] : [newReply]
+                };
+              }
+              return nestedReply;
+            });
+            return { ...reply, replies: nestedReplies };
+          }
+          return reply;
+        });
+        return { ...comment, replies: updatedReplies };
       }
       return comment;
     }));
