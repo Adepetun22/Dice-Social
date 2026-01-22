@@ -10,7 +10,25 @@ import Avatar from "../../../assets/Avatar.png";
 
 const PostCard = ({ post }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      content: "This is a great product! I bought one last month and it's been amazing.",
+      name: "Annette Black",
+      userType: "Personal Customer",
+      avatar: Avatar,
+      liked: false,
+      replies: [
+        {
+          id: 101,
+          content: "Thanks for the feedback! Glad you like it.",
+          name: "Courtney Henry",
+          avatar: Avatar,
+          liked: false,
+        }
+      ]
+    }
+  ]);
   const [newComment, setNewComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -63,10 +81,59 @@ const PostCard = ({ post }) => {
 
   const handleCommentSubmit = () => {
     if (newComment.trim() !== "") {
-      setComments([...comments, newComment]);
+      const newCommentObj = {
+        id: Date.now(),
+        content: newComment,
+        name: "Annette Black",
+        userType: "Personal Customer",
+        avatar: Avatar,
+        liked: false,
+        replies: []
+      };
+      setComments([...comments, newCommentObj]);
       setNewComment("");
       setShowCommentInput(false);
     }
+  };
+
+  // Handle like on a comment
+  const handleCommentLike = (commentId) => {
+    setComments(comments.map(comment => {
+      if (comment.id === commentId) {
+        return { ...comment, liked: !comment.liked };
+      }
+      // Also check replies
+      if (comment.replies) {
+        const updatedReplies = comment.replies.map(reply => {
+          if (reply.id === commentId) {
+            return { ...reply, liked: !reply.liked };
+          }
+          return reply;
+        });
+        return { ...comment, replies: updatedReplies };
+      }
+      return comment;
+    }));
+  };
+
+  // Handle reply to a comment
+  const handleCommentReply = (commentId, replyText) => {
+    setComments(comments.map(comment => {
+      if (comment.id === commentId) {
+        const newReply = {
+          id: Date.now(),
+          content: replyText,
+          name: "Annette Black",
+          avatar: Avatar,
+          liked: false
+        };
+        return { 
+          ...comment, 
+          replies: comment.replies ? [...comment.replies, newReply] : [newReply]
+        };
+      }
+      return comment;
+    }));
   };
 
   const handleEmojiClick = (emoji) => {
@@ -279,11 +346,16 @@ const PostCard = ({ post }) => {
         {/* Comments Display */}
         {comments.map((comment, index) => (
           <Comment
-            key={index}
-            avatar={Avatar}
-            name="Annette Black"
-            userType="Personal Customer"
-            content={comment}
+            key={comment.id || index}
+            commentId={comment.id}
+            avatar={comment.avatar}
+            name={comment.name}
+            userType={comment.userType}
+            content={comment.content}
+            replies={comment.replies || []}
+            liked={comment.liked}
+            onLike={handleCommentLike}
+            onReply={handleCommentReply}
           />
         ))}
       </div>
