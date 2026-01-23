@@ -47,33 +47,49 @@ const Comment = ({
     setShowReactionsPicker(false);
   };
 
+  // Calculate responsive indentation based on depth
+  const getIndentClass = (depth) => {
+    if (depth === 0) return "pl-2 sm:pl-4";
+    if (depth === 1) return "pl-4 sm:pl-8";
+    if (depth === 2) return "pl-4 sm:pl-10";
+    return "pl-4 sm:pl-12";
+  };
+
+  // Get thread line visibility based on depth
+  const showThreadLine = depth > 0;
+
   return (
-    <div className="mt-3">
-      <div className="flex gap-3">
+    <div className={`mt-2 overflow-hidden max-w-full min-w-0 ${depth > 0 ? 'relative' : ''}`}>
+      {/* Thread line indicator for nested replies */}
+      {showThreadLine && (
+        <div className="absolute left-1 sm:left-2 top-0 bottom-0 w-0.5 bg-gray-200" style={{ width: '2px' }}></div>
+      )}
+      
+      <div className={`flex gap-2 sm:gap-3 ${getIndentClass(depth)}`}>
         <img
           alt="User"
-          className="w-9 h-9 rounded-full object-cover"
+          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover flex-shrink-0"
           src={avatar}
         />
-        <div className="flex-1">
-          <div className="bg-gray-50 rounded-lg p-3">
+        <div className="flex-1 min-w-0">
+          <div className="bg-gray-50 rounded-lg p-2 sm:p-3 break-words overflow-wrap-anywhere">
             <h3 className="font-semibold text-gray-800 text-sm">{name}</h3>
             <p className="text-xs text-gray-500">{userType}</p>
-            <p className="text-gray-700 mt-1 text-sm">{content}</p>
+            <p className="text-gray-700 mt-1 text-sm break-words overflow-wrap-anywhere">{content}</p>
           </div>
           
           {/* Like count display */}
-          <p className="flex items-center gap-1 text-sm text-gray-500 pl-2">
+          <p className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 pl-2 mt-1">
             <span>{likedReaction || '👍'}</span>
             <span>{likedReaction ? '1' : '0'}</span>
           </p>
 
           {/* Like and Reply buttons */}
-          <div className="flex gap-4 mt-1 text-sm text-gray-500 pl-2">
+          <div className="flex gap-3 sm:gap-4 mt-1 text-xs sm:text-sm text-gray-500 pl-2">
             <div className="relative" ref={likeButtonRef}>
               <button 
                 onClick={() => setShowReactionsPicker(!showReactionsPicker)}
-                className="flex items-center gap-2 hover:text-blue-600"
+                className="flex items-center gap-1 sm:gap-2 hover:text-blue-600"
               >
                 <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                   <path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path>
@@ -98,21 +114,21 @@ const Comment = ({
 
           {/* Reply Input with Emoji Picker */}
           {showReplyInput && (
-            <div className="flex gap-2 mt-2 pl-2 relative">
+            <div className="flex gap-2 mt-2 pl-2 relative min-w-0">
               <input
                 type="text"
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Write a reply..."
-                className="border rounded-md p-2 flex-grow text-sm"
+                className="border rounded-md p-2 flex-grow text-sm min-w-0"
                 onKeyPress={(e) => e.key === 'Enter' && handleReplySubmit()}
               />
-              <button onClick={() => setShowReplyEmojiPicker(!showReplyEmojiPicker)} className="hover:text-blue-600">
+              <button onClick={() => setShowReplyEmojiPicker(!showReplyEmojiPicker)} className="hover:text-blue-600 flex-shrink-0">
                 😊
               </button>
               <button 
                 onClick={handleReplySubmit}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 flex-shrink-0"
                 disabled={!replyText.trim()}
               >
                 <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
