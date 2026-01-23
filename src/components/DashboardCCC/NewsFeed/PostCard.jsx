@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FaThumbsUp, FaRegComment, FaRetweet, FaPaperPlane } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag, FiTrash2 } from "react-icons/fi";
 import EmojiPicker from "../EmojiPicker";
 import ReactionsPicker from "../ReactionsPicker";
 import Comment from "./Comment";
+import { formatTimestamp } from "../../../utils/dateUtils";
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
 import Avatar from "../../../assets/Avatar.png";
 
@@ -31,22 +33,15 @@ const PostCard = ({ post }) => {
   const dropdownRef = useRef(null);
   const likeButtonRef = useRef(null);
 
-  // Close dropdown and reactions picker when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
-      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
-        setShowReactionsPicker(false);
-      }
-    };
+  // Close dropdown when clicking outside
+  useClickOutside(() => {
+    setShowDropdown(false);
+  }, dropdownRef);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // Close reactions picker when clicking outside
+  useClickOutside(() => {
+    setShowReactionsPicker(false);
+  }, likeButtonRef);
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -203,19 +198,6 @@ const PostCard = ({ post }) => {
       [emoji]: (prev[emoji] || 0) + 1,
     }));
     setShowReactionsPicker(false);
-  };
-
-  // Helper function to format timestamp
-  const formatTimestamp = (timestamp) => {
-    if (!timestamp) return "Just now";
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - date) / 1000);
-    
-    if (diffInSeconds < 60) return "Just now";
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
-    return `${Math.floor(diffInSeconds / 86400)}d ago`;
   };
 
   // Use post data if available, otherwise use static data

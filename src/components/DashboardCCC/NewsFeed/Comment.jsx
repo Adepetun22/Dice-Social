@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import EmojiPicker from "../EmojiPicker";
 import ReactionsPicker from "../ReactionsPicker";
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
 const Comment = ({ 
   avatar, 
@@ -22,18 +23,9 @@ const Comment = ({
   const likeButtonRef = useRef(null);
 
   // Close reactions picker when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
-        setShowReactionsPicker(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useClickOutside(() => {
+    setShowReactionsPicker(false);
+  }, likeButtonRef);
 
   const handleReplySubmit = () => {
     if (replyText.trim() !== "" && onReply) {
