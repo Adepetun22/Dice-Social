@@ -3,7 +3,7 @@ import ovabossbanner from "../../../assets/ovabossbanner.jpeg";
 
 const SmallAdsCard = () => {
   return (
-    <div className="mt-4">
+    <div className="mt-4 hidden lg:block">
       <div className="bg-white rounded-lg w-full overflow-hidden">
         <img
           src={ovabossbanner}
