@@ -4,10 +4,10 @@ import { BsThreeDots } from "react-icons/bs";
 import { FiLink, FiUserX, FiFlag } from "react-icons/fi";
 import EmojiPicker from "../EmojiPicker";
 import ReactionsPicker from "../ReactionsPicker";
-import Comment from "./Comment";
+import Comment from "../NewsFeed/Comment";
 
 import Avatar from "../../../assets/Avatar.png";
-import Freezer from "../../../assets/Freezer.png";
+import ovabossads from "../../../assets/ovabossads.jpeg";
 
 const SponsoredAdsCard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -255,23 +255,33 @@ const SponsoredAdsCard = () => {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <h2 className="font-semibold text-gray-800">Courtney Henry</h2>
+              <h2 className="font-semibold text-gray-800">Ovaboss Brand</h2>
             </div>
           </div>
         </div>
 
         {/* Post Content */}
         <p className="text-gray-700 text-sm">
-          We have available brand new Deep Freezer for sale that comes with 2
-          years warranty! Super cool breakdown! 🔥 <br />
-          Replit really is underrated , excited for the full comparison! ...more
+          🚀 Welcome to Ovaboss — the ultimate e-commerce platform for businesses! 
+          <br /><br />
+          Sell your products to thousands of customers with <strong>zero subscription fees</strong> and <strong>no monthly charges</strong>!
+          <br /><br />
+          ✅ Easy setup
+          <br />
+          ✅ Wide customer reach
+          <br />
+          ✅ Secure payments
+          <br />
+          ✅ No hidden fees
+          <br /><br />
+          Start selling today and grow your business with Ovaboss! 💼
         </p>
 
         {/* Image */}
         <div className="flex justify-center items-center">
           <img
-            src={Freezer}
-            alt="Deep Freezer"
+            src={ovabossads}
+            alt="Sponsored Ad"
             className="w-full h-[calc(100%-140px)] sm:w-[calc(100%-140px)] rounded-lg object-cover"
           />
         </div>

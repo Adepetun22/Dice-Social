@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreatePost from "../../components/DashboardCCC/NewsFeed/CreatePost";
 import PostCard from "../../components/DashboardCCC/NewsFeed/PostCard";
 import SuggestionCard from "../../components/DashboardCCC/NewsFeed/SuggestionCard";
+import SponsoredAdsCard from "../../components/DashboardCCC/Advert/SponsoredAdsCard";
 import ConnectsSuggestion from "../../components/DashboardCCC/NewsFeed/ConnectsSuggestion";
 
 const NewsFeed = () => {
@@ -32,6 +33,7 @@ const NewsFeed = () => {
 
           {/* Existing static posts */}
           <SuggestionCard />
+          <SponsoredAdsCard />
           <PostCard />
         </div>
       </div>
