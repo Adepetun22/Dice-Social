@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FaThumbsUp, FaRegComment, FaPaperPlane } from "react-icons/fa";
-import { BsThreeDots } from "react-icons/bs";
-import { FiLink, FiUserX, FiFlag } from "react-icons/fi";
 import EmojiPicker from "../EmojiPicker";
 import ReactionsPicker from "../ReactionsPicker";
 import Comment from "../NewsFeed/Comment";
@@ -10,7 +8,6 @@ import Avatar from "../../../assets/Avatar.png";
 import ovabossads from "../../../assets/ovabossads.jpeg";
 
 const SponsoredAdsCard = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
@@ -29,33 +26,7 @@ const SponsoredAdsCard = () => {
     '🔥': 0,
     '💯': 0,
   });
-  const dropdownRef = useRef(null);
   const likeButtonRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
-      if (likeButtonRef.current && !likeButtonRef.current.contains(event.target)) {
-        setShowReactionsPicker(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleDropdownToggle = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  const handleMenuAction = (action) => {
-    console.log(`${action} clicked`);
-    setShowDropdown(false);
-  };
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -208,42 +179,9 @@ const SponsoredAdsCard = () => {
   return (
     <div className="py-5">
       <div className="bg-white w-full rounded-lg shadow p-4 space-y-4">
-        <div className="inline-flex items-center justify-between border-b w-full pb-2">
+        {/* Sponsored Label with line */}
+        <div className="border-b pb-2">
           <p className="text-sm text-gray-400">Sponsored</p>
-          <div className="relative" ref={dropdownRef}>
-            <BsThreeDots
-              className="text-xl text-gray-500 cursor-pointer hover:text-gray-700"
-              onClick={handleDropdownToggle}
-            />
-
-            {showDropdown && (
-              <div className="absolute right-0 top-6 text-[10px] w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
-                <button
-                  onClick={() => handleMenuAction("Copy link to post")}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
-                >
-                  <FiLink className="text-gray-500" />
-                  Copy link to post
-                </button>
-
-                <button
-                  onClick={() => handleMenuAction("Unfollow Courtney Henry")}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
-                >
-                  <FiUserX className="text-gray-500" />
-                  Unfollow
-                </button>
-
-                <button
-                  onClick={() => handleMenuAction("Report Post")}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
-                >
-                  <FiFlag className="text-gray-500" />
-                  Report Post
-                </button>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Post Header */}
@@ -255,7 +193,15 @@ const SponsoredAdsCard = () => {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <h2 className="font-semibold text-gray-800">Ovaboss Brand</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="font-semibold text-gray-800">Ovaboss Brand</h2>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-yellow-400 text-black text-xs font-semibold rounded-full">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Verified
+                </span>
+              </div>
             </div>
           </div>
         </div>
