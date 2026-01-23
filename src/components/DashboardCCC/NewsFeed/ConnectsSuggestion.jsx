@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import SmallAdsCard from "../Advert/smallAdsCard";
+import SmallAdsCard2 from "../Advert/smallAdsCard2";
 
 // You'll need to import your actual avatar image
 // import Avatar from "../../../assets/Avatar.png";
@@ -54,7 +56,7 @@ const ConnectsSuggestion = () => {
   );
 
   return (
-    <div className="bg-white rounded-lg   w-full ">
+    <div className="bg-white rounded-lg w-full">
       {/* Search Bar */}
       <div className="relative mb-4">
         <input
@@ -113,6 +115,10 @@ const ConnectsSuggestion = () => {
           More suggestions on the way
         </p>
       </div>
+
+      {/* Banner Ads */}
+      <SmallAdsCard />
+      <SmallAdsCard2 />
     </div>
   );
 };
