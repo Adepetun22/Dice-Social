@@ -1,6 +1,5 @@
 import React from "react";
 import ConnectsSuggestion from "../../components/DashboardCCC/NewsFeed/ConnectsSuggestion";
-import PostCard from "../../components/DashboardCCC/NewsFeed/PostCard";
 import UserProfileHeader from "../../components/DashboardCCC/Profile/UserProfileHeader";
 import ProfileFeed from "../../components/DashboardCCC/Profile/ProfileFeed";
 
@@ -11,7 +10,6 @@ const ProfileCCC = () => {
         <div className="lg:col-span-3 col-span-4">
           <UserProfileHeader />
           <ProfileFeed />
-          <PostCard />
         </div>
         <div className="col-span-4 lg:col-span-1">
           <ConnectsSuggestion />

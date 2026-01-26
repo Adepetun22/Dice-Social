@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiMessageSquare, FiUserMinus } from "react-icons/fi";
+import { FiUserMinus } from "react-icons/fi";
 
 // Import avatar
 import Avatar from "../../../assets/Avatar.png";
@@ -44,22 +44,10 @@ const ConnectionsList = ({
   ] 
 }) => {
   const [connectedUsers, setConnectedUsers] = useState(connections);
-  const [messageUsers, setMessageUsers] = useState([]);
 
   const handleRemoveConnection = (userId) => {
     setConnectedUsers(connectedUsers.filter(user => user.id !== userId));
     console.log(`Removed connection ${userId}`);
-  };
-
-  const handleMessage = (userId) => {
-    if (!messageUsers.includes(userId)) {
-      setMessageUsers([...messageUsers, userId]);
-    }
-    console.log(`Message user ${userId}`);
-  };
-
-  const isMessaged = (userId) => {
-    return messageUsers.includes(userId);
   };
 
   return (
@@ -76,42 +64,40 @@ const ConnectionsList = ({
               key={user.id} 
               className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start gap-3">
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 truncate">
-                    {user.name}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {user.type}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {user.mutualConnections} mutual connections
-                  </p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-start gap-3">
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-900 truncate">
+                      {user.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {user.type}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {user.mutualConnections} mutual connections
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => handleMessage(user.id)}
-                  disabled={isMessaged(user.id)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
-                    isMessaged(user.id)
-                      ? "bg-green-100 text-green-700 cursor-default"
-                      : "bg-primary-default text-white hover:opacity-90"
-                  }`}
-                >
-                  <FiMessageSquare className="text-sm" />
-                  {isMessaged(user.id) ? "Message Sent" : "Message"}
-                </button>
+                {/* Action Button */}
                 <button
                   onClick={() => handleRemoveConnection(user.id)}
-                  className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-[#1D1D1D] hover:text-[#FFD700] hover:border-[#1D1D1D] transition-colors whitespace-nowrap"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#1D1D1D';
+                    e.currentTarget.style.color = '#FFD700';
+                    e.currentTarget.style.borderColor = '#1D1D1D';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '';
+                    e.currentTarget.style.color = '';
+                    e.currentTarget.style.borderColor = '';
+                  }}
                 >
                   <FiUserMinus className="text-sm" />
                   Remove
