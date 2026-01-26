@@ -62,7 +62,7 @@ const ConnectionsList = ({
           connectedUsers.map((user) => (
             <div 
               key={user.id} 
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg border border-gray-200 p-4"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-start gap-3">
