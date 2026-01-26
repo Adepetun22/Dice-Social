@@ -87,16 +87,16 @@ const ConnectionsList = ({
                 {/* Action Button */}
                 <button
                   onClick={() => handleRemoveConnection(user.id)}
-                  className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-[#1D1D1D] hover:text-[#FFD700] hover:border-[#1D1D1D] transition-colors whitespace-nowrap"
+                  className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium border border-[#FFD700] bg-[#FFD700] text-[#1D1D1D] hover:bg-[#1D1D1D] hover:text-[#FFD700] hover:border-[#1D1D1D] transition-colors whitespace-nowrap"
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#1D1D1D';
                     e.currentTarget.style.color = '#FFD700';
                     e.currentTarget.style.borderColor = '#1D1D1D';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '';
-                    e.currentTarget.style.color = '';
-                    e.currentTarget.style.borderColor = '';
+                    e.currentTarget.style.backgroundColor = '#FFD700';
+                    e.currentTarget.style.color = '#1D1D1D';
+                    e.currentTarget.style.borderColor = '#FFD700';
                   }}
                 >
                   <FiUserMinus className="text-sm" />
