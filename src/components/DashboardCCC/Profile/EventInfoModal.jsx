@@ -67,6 +67,7 @@ const EventInfoModal = ({
             >
               <div
                 className="text-neutral-default text-center font-h-2-semi-font-family text-h-2-semi-font-size leading-h-2-semi-line-height font-h-2-semi-font-weight relative flex-1"
+                style={{ fontWeight: '600' }}
               >
                 {date}
               </div>
@@ -76,6 +77,7 @@ const EventInfoModal = ({
             >
               <div
                 className="text-color-grey-400 text-center font-body-texts-b-1-font-family text-body-texts-b-1-font-size leading-body-texts-b-1-line-height font-body-texts-b-1-font-weight relative flex-1"
+                style={{ fontWeight: '600' }}
               >
                 {time}
               </div>
@@ -92,6 +94,7 @@ const EventInfoModal = ({
               >
                 <div
                   className="text-[#374151] text-left font-headings-h-5-font-family text-headings-h-5-font-size leading-headings-h-5-line-height font-headings-h-5-font-weight relative self-stretch"
+                  style={{ fontWeight: '600', color: '#000000', textShadow: '0px 0px 0px 1px #000000' }}
                 >
                   Business Representative Name
                 </div>
@@ -114,6 +117,7 @@ const EventInfoModal = ({
               >
                 <div
                   className="text-[#374151] text-left font-headings-h-5-font-family text-headings-h-5-font-size leading-headings-h-5-line-height font-headings-h-5-font-weight relative self-stretch"
+                  style={{ fontWeight: '600', color: '#000000', textShadow: '0px 0px 0px 1px #000000' }}
                 >
                   Event Name
                 </div>
@@ -136,6 +140,7 @@ const EventInfoModal = ({
               >
                 <div
                   className="text-[#374151] text-left font-headings-h-5-font-family text-headings-h-5-font-size leading-headings-h-5-line-height font-headings-h-5-font-weight relative self-stretch"
+                  style={{ fontWeight: '600', color: '#000000', textShadow: '0px 0px 0px 1px #000000' }}
                 >
                   Location
                 </div>
@@ -159,6 +164,7 @@ const EventInfoModal = ({
               >
                 <div
                   className="text-[#374151] text-left font-headings-h-5-font-family text-headings-h-5-font-size leading-headings-h-5-line-height font-headings-h-5-font-weight relative self-stretch"
+                  style={{ fontWeight: '600', color: '#000000', textShadow: '0px 0px 0px 1px #000000' }}
                 >
                   Event Details
                 </div>
@@ -178,7 +184,7 @@ const EventInfoModal = ({
         <div
           className="flex flex-row gap-4 items-center justify-center flex-wrap content-center w-[100%] shrink-0 max-w-[295px] relative"
         >
-          <div
+          <button
             className="rounded-lg border-solid border-primary-default border pt-3 pr-2 pb-3 pl-2 flex flex-row gap-2.5 items-center justify-center flex-1 h-9 min-w-[99px] max-w-[128px] relative cursor-pointer hover:bg-gray-50 transition-colors"
             onClick={onShareEvent}
           >
@@ -187,8 +193,8 @@ const EventInfoModal = ({
             >
               Share Event
             </div>
-          </div>
-          <div
+          </button>
+          <button
             className="bg-primary-default rounded-lg pt-3 pr-2 pb-3 pl-2 flex flex-row gap-2.5 items-center justify-center shrink-0 w-32 h-9 min-w-[99px] max-w-[128px] relative cursor-pointer hover:opacity-90 transition-opacity"
             onClick={onJoinEvent}
           >
@@ -197,7 +203,7 @@ const EventInfoModal = ({
             >
               Join Event
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -14,8 +14,13 @@
       - Add backdrop click to close functionality
       - Improve accessibility with proper ARIA attributes
 - [x] 6. Fix display structure to match original EventInfoModal.html
-- [x] 7. Integrate EventInfoModal with EventLog.jsx
-- [x] 8. Complete task
+- [x] 7. Make text titles bold (font-weight: 600)
+- [x] 8. Convert Share Event and Join Event divs to button elements
+- [x] 9. Set max-width to 437px
+- [x] 10. Make text titles black color with 1px text-shadow
+- [x] 11. Make date and time text bold (font-weight: 600)
+- [x] 12. Integrate EventInfoModal with EventLog.jsx
+- [x] 13. Complete task
 
 ### Component Features:
 - Props: isOpen, onClose, date, time, representativeName, eventName, location, eventDetails, onShareEvent, onJoinEvent
@@ -25,6 +30,11 @@
 - Backdrop click to close functionality
 - Consistent with original EventInfoModal.html structure
 - Modal wrapper with backdrop for proper display context
+- Bold text titles (font-weight: 600)
+- Black color text with 1px text-shadow for titles
+- Bold date and time text (font-weight: 600)
+- Button elements for Share Event and Join Event
+- Fixed max-width of 437px
 
 ### Integration with EventLog.jsx:
 - EventLog now imports and uses EventInfoModal
