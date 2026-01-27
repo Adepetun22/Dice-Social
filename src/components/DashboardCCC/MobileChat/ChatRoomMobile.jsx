@@ -256,7 +256,7 @@ const ChatRoomMobile = ({ onBack, contactDetails = null }) => {
                 <div className="container">
                   <div className="container2">
                     <div className="savannah-nguyen font-medium">{contactDetails ? contactDetails.name : "Savannah Nguyen"}</div>
-                    <div className="text-xs text-gray-500">{contactDetails ? contactDetails.category || "Personal Customer" : "Personal Customer"}</div>
+                    <div className="text-xs text-gray-500">{contactDetails ? contactDetails.category || "Personal Member" : "Personal Member"}</div>
                   </div>
                 </div>
                 <div className="frame-2147224224">

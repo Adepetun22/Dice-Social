@@ -29,7 +29,7 @@ const ContactMessage = ({
         <div className="frame-2147224220 flex justify-between items-center mb-1">
           <div className="name-and-category">
             <div className="jenny-wilson font-medium">{name}</div>
-            <div className="category-label text-xs text-gray-500">{category || 'Personal Customer'}</div>
+            <div className="category-label text-xs text-gray-500">{category || 'Personal Member'}</div>
           </div>
           <div className="apr-2022 text-xs text-gray-500">{time}</div>
         </div>

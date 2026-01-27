@@ -21,18 +21,20 @@ const ContactsModal = ({ onClose }) => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   
-  const memberTypes = ['All Member', 'Personal Customer', 'Acquaintance Customer', 'Business Rep', 'Customer Care'];
+  const memberTypes = ['All Member', 'Personal Member', 'Business Member', 'Acquaintance Customer', 'Acquaintance Business', 'Business Representative', 'Customer Care'];
   
   const contacts = [
-    { name: 'Esther Howard', type: 'Personal Customer', avatar: Avatar1 },
-    { name: 'Devon Lane', type: 'Personal Customer', avatar: Avatar2 },
+    { name: 'Esther Howard', type: 'Personal Member', avatar: Avatar1 },
+    { name: 'Devon Lane', type: 'Personal Member', avatar: Avatar2 },
     { name: 'Brooklyn Simmons', type: 'Acquaintance Customer', avatar: Avatar3 },
-    { name: 'Jenny Wilson', type: 'Acquaintance Customer', avatar: Avatar4 },
-    { name: 'Jerome Bell', type: 'Personal Customer', avatar: Avatar5 },
+    { name: 'Jenny Wilson', type: 'Acquaintance Business', avatar: Avatar4 },
+    { name: 'Jerome Bell', type: 'Personal Member', avatar: Avatar5 },
     { name: 'Arlene McCoy', type: 'Acquaintance Customer', avatar: Avatar6 },
-    { name: 'Savannah Nguyen', type: 'Business Rep', avatar: Avatar7 },
+    { name: 'Savannah Nguyen', type: 'Business Representative', avatar: Avatar7 },
     { name: 'Theresa Webb', type: 'Customer Care', avatar: Avatar8 },
-    { name: 'Bessie Cooper', type: 'Business Rep', avatar: Avatar9 }
+    { name: 'Bessie Cooper', type: 'Business Representative', avatar: Avatar9 },
+    { name: 'John Smith', type: 'Business Member', avatar: Avatar1 },
+    { name: 'Jane Doe', type: 'Business Member', avatar: Avatar2 }
   ];
 
   // Filter contacts based on selected member type and search term

@@ -63,18 +63,20 @@ const ChatCenter = () => {
 
   // Sample contact data
   const contacts = [
-    { id: 0, name: "Jenny Wilson", time: "12:40 PM", message: "Okay wait a sec", unreadCount: 2, category: "Personal Customer" },
+    { id: 0, name: "Jenny Wilson", time: "12:40 PM", message: "Okay wait a sec", unreadCount: 2, category: "Personal Member" },
     { id: 1, name: "Savannah Nguyen", time: "10:20 AM", message: "Thank you for the response", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 2, name: "John Smith", time: "09:15 AM", message: "Meeting tomorrow at 3pm", unreadCount: 1, category: "Personal Customer" },
-    { id: 3, name: "Emily Johnson", time: "Yesterday", message: "Thanks for your help!", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 4, name: "Michael Brown", time: "Yesterday", message: "Project update attached", unreadCount: 3, category: "Personal Customer" },
+    { id: 2, name: "John Smith", time: "09:15 AM", message: "Meeting tomorrow at 3pm", unreadCount: 1, category: "Personal Member" },
+    { id: 3, name: "Emily Johnson", time: "Yesterday", message: "Thanks for your help!", unreadCount: 0, category: "Acquaintance Business" },
+    { id: 4, name: "Michael Brown", time: "Yesterday", message: "Project update attached", unreadCount: 3, category: "Personal Member" },
     { id: 5, name: "Sarah Davis", time: "Monday", message: "Call me when you're free", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 6, name: "Robert Miller", time: "Monday", message: "Can we reschedule?", unreadCount: 1, category: "Personal Customer" },
-    { id: 7, name: "Jennifer Wilson", time: "Sunday", message: "Happy birthday!", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Business Rep" },
+    { id: 6, name: "Robert Miller", time: "Monday", message: "Can we reschedule?", unreadCount: 1, category: "Personal Member" },
+    { id: 7, name: "Jennifer Wilson", time: "Sunday", message: "Happy birthday!", unreadCount: 0, category: "Acquaintance Business" },
+    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Business Representative" },
     { id: 9, name: "Lisa Anderson", time: "Saturday", message: "Great job on the presentation", unreadCount: 0, category: "Customer Care" },
-    { id: 10, name: "James Wilson", time: "Friday", message: "Looking forward to our meeting", unreadCount: 0, category: "Business Rep" },
-    { id: 11, name: "Patricia Johnson", time: "Friday", message: "Thanks for your assistance", unreadCount: 1, category: "Customer Care" }
+    { id: 10, name: "James Wilson", time: "Friday", message: "Looking forward to our meeting", unreadCount: 0, category: "Business Representative" },
+    { id: 11, name: "Patricia Johnson", time: "Friday", message: "Thanks for your assistance", unreadCount: 1, category: "Customer Care" },
+    { id: 12, name: "Alice Brown", time: "Thursday", message: "Business inquiry", unreadCount: 1, category: "Business Member" },
+    { id: 13, name: "Bob Wilson", time: "Wednesday", message: "Partnership discussion", unreadCount: 0, category: "Business Member" }
   ];
 
   // Function to handle emoji selection
@@ -382,8 +384,8 @@ const ChatCenter = () => {
                 } else if (activeFilter === 'unread') {
                   if (contact.unreadCount <= 0) return false;
                 } else if (activeFilter === 'groups') {
-                  // Consider non-Personal Customer categories as groups
-                  if (contact.category === 'Personal Customer') return false;
+                  // Consider non-Personal Member categories as groups
+                  if (contact.category === 'Personal Member') return false;
                 }
                 
                 // Apply search filter

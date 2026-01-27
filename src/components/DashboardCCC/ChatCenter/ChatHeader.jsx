@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HeaderOption from './ChatOption/HeaderOption';
 
-const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true, memberType = "Personal Customer" }) => {
+const ChatHeader = ({ onBack, userName = "Savannah Nguyen", online = true, memberType = "Personal Member" }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 

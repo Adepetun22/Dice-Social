@@ -16,14 +16,14 @@ const ConnectionsList = ({
     {
       id: 2,
       name: "Jacob Jones",
-      type: "Business Customer",
+      type: "Business Member",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       mutualConnections: 8
     },
     {
       id: 3,
       name: "Annette Black",
-      type: "Personal Customer",
+      type: "Personal Member",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       mutualConnections: 5
     },
@@ -37,9 +37,16 @@ const ConnectionsList = ({
     {
       id: 5,
       name: "Esther Howard",
-      type: "Personal Customer",
+      type: "Personal Member",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       mutualConnections: 3
+    },
+    {
+      id: 6,
+      name: "Emily Johnson",
+      type: "Acquaintance Business",
+      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      mutualConnections: 7
     }
   ] 
 }) => {

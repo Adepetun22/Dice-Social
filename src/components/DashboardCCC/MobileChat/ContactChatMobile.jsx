@@ -8,16 +8,18 @@ const ContactChatMobile = ({ onContactSelect }) => {
 
   // Sample contact data
   const contacts = [
-    { id: 0, name: "Jenny Wilson", time: "12:40 PM", message: "Okay wait a sec", unreadCount: 2, category: "Personal Customer" },
+    { id: 0, name: "Jenny Wilson", time: "12:40 PM", message: "Okay wait a sec", unreadCount: 2, category: "Personal Member" },
     { id: 1, name: "Savannah Nguyen", time: "10:20 AM", message: "Thank you for the response", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 2, name: "John Smith", time: "09:15 AM", message: "Meeting tomorrow at 3pm", unreadCount: 1, category: "Personal Customer" },
-    { id: 3, name: "Emily Johnson", time: "Yesterday", message: "Thanks for your help!", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 4, name: "Michael Brown", time: "Yesterday", message: "Project update attached", unreadCount: 3, category: "Personal Customer" },
+    { id: 2, name: "John Smith", time: "09:15 AM", message: "Meeting tomorrow at 3pm", unreadCount: 1, category: "Personal Member" },
+    { id: 3, name: "Emily Johnson", time: "Yesterday", message: "Thanks for your help!", unreadCount: 0, category: "Acquaintance Business" },
+    { id: 4, name: "Michael Brown", time: "Yesterday", message: "Project update attached", unreadCount: 3, category: "Personal Member" },
     { id: 5, name: "Sarah Davis", time: "Monday", message: "Call me when you're free", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 6, name: "Robert Miller", time: "Monday", message: "Can we reschedule?", unreadCount: 1, category: "Personal Customer" },
-    { id: 7, name: "Jennifer Wilson", time: "Sunday", message: "Happy birthday!", unreadCount: 0, category: "Acquaintance Customer" },
-    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Personal Customer" },
-    { id: 9, name: "Lisa Anderson", time: "Saturday", message: "Great job on the presentation", unreadCount: 0, category: "Acquaintance Customer" }
+    { id: 6, name: "Robert Miller", time: "Monday", message: "Can we reschedule?", unreadCount: 1, category: "Personal Member" },
+    { id: 7, name: "Jennifer Wilson", time: "Sunday", message: "Happy birthday!", unreadCount: 0, category: "Acquaintance Business" },
+    { id: 8, name: "David Taylor", time: "Sunday", message: "Documents reviewed", unreadCount: 2, category: "Business Representative" },
+    { id: 9, name: "Lisa Anderson", time: "Saturday", message: "Great job on the presentation", unreadCount: 0, category: "Customer Care" },
+    { id: 10, name: "Alice Brown", time: "Friday", message: "Business inquiry", unreadCount: 1, category: "Business Member" },
+    { id: 11, name: "Bob Wilson", time: "Thursday", message: "Partnership discussion", unreadCount: 0, category: "Business Member" }
   ];
 
   const filteredContacts = contacts.filter(contact => {
@@ -27,7 +29,7 @@ const ContactChatMobile = ({ onContactSelect }) => {
     } else if (activeFilter === 'unread') {
       if (contact.unreadCount <= 0) return false;
     } else if (activeFilter === 'groups') {
-      if (contact.category !== 'Acquaintance Customer') return false;
+      if (contact.category === 'Personal Member') return false;
     }
     
     // Apply search filter

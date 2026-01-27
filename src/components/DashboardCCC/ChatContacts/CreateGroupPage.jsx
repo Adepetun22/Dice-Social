@@ -3,7 +3,7 @@ import UsersThree from '../../../assets/users-three0.svg';
 import Smiley from '../../../assets/smiley0.svg';
 import ArrowRight from '../../../assets/arrow-right0.svg';
 
-const CreateGroupPage = ({ isOpen, onClose, groupType = 'Personal Customer' }) => {
+const CreateGroupPage = ({ isOpen, onClose, groupType = 'Personal Member' }) => {
   const [groupSubject, setGroupSubject] = useState('');
   const [groupImage, setGroupImage] = useState(UsersThree);
   const [error, setError] = useState('');

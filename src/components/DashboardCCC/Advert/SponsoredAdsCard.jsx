@@ -38,7 +38,7 @@ const SponsoredAdsCard = () => {
         id: Date.now(),
         content: newComment,
         name: "Annette Black",
-        userType: "Personal Customer",
+        userType: "Personal Member",
         avatar: Avatar,
         liked: false,
         replies: []

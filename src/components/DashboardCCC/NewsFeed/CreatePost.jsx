@@ -70,7 +70,7 @@ const CreatePost = ({ onPostSubmit }) => {
         mediaPreview: mediaPreview,
         author: {
           name: "Fatimah Oladigbolu",
-          type: "Personal Customer",
+          type: "Personal Member",
           avatar: Avatar,
         },
       };
@@ -181,7 +181,7 @@ const CreatePost = ({ onPostSubmit }) => {
                 <h3 className="font-semibold text-gray-900">
                   Fatimah Oladigbolu
                 </h3>
-                <p className="text-sm text-gray-500">Personal Customer</p>
+                <p className="text-sm text-gray-500">Personal Member</p>
               </div>
             </div>
 
