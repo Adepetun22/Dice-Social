@@ -38,40 +38,40 @@ const ChatRoomMobile = ({ onBack, contactDetails = null }) => {
     { 
       id: 5, 
       type: 'sent', 
-      content: '',
+      content: 'Here is the product image you requested',
       file: { 
         type: 'photo', 
-        url: 'blob:http://localhost:5173/150a867b-9286-4f2d-b7b1-4619e76ce380', 
-        name: 'Untitled Project - illustrationImage5.png' 
+        url: 'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400', 
+        name: 'product-image.jpg' 
       }
     },
     { 
       id: 6, 
       type: 'sent', 
-      content: '',
+      content: 'Product details document',
       file: { 
         type: 'document', 
-        url: 'blob:http://localhost:5173/a1b5cc3c-6f95-4bd8-8647-1faf8a9ba095', 
-        name: 'Untitled Project - illustrationImage8.png', 
+        url: 'https://example.com/document.pdf', 
+        name: 'product-details.pdf', 
         size: 673.7 * 1024 
       }
     },
     { 
       id: 7, 
       type: 'sent', 
-      content: 'Sample',
+      content: 'Sample message',
       file: null
     },
     { 
       id: 8, 
       type: 'sent', 
-      content: '👎 no',
+      content: 'Let me know if you need any assistance',
       file: null
     },
     { 
       id: 9, 
       type: 'sent', 
-      content: 'sample',
+      content: 'Thank you for your order!',
       file: null
     }
   ]);

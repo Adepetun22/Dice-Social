@@ -74,9 +74,9 @@ const OtherUserProfileHeader = () => {
           <p className="text-sm text-gray-600 mb-2">
             {userData.connections} Connections
           </p>
-          <p className="text-sm text-yellow-600 font-medium">
+          {/* <p className="text-sm text-yellow-600 font-medium hidden">
             {userData.description}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
