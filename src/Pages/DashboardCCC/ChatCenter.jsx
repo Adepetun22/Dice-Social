@@ -259,7 +259,7 @@ const ChatCenter = () => {
   // Render mobile view
   if (isMobileView) {
     return (
-      <div className="ccc-chatroom flex h-screen bg-gray-50 relative overflow-hidden">
+      <div className="ccc-chatroom flex h-full bg-gray-50 relative" style={{ overflow: 'hidden' }}>
         {/* Contacts List - slides out to the left when chat room is shown */}
         <div 
           className={`absolute top-0 left-0 w-full h-full transition-transform duration-300 ease-in-out transform ${
@@ -286,7 +286,7 @@ const ChatCenter = () => {
 
   // Desktop view (existing implementation)
   return (
-    <div className="ccc-chatroom flex h-screen bg-gray-50 overflow-hidden">
+    <div className="ccc-chatroom flex h-full bg-gray-50" style={{ overflow: 'hidden' }}>
       {/* Contacts Modal */}
       {showContactsModal && (
         <div 
