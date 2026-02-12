@@ -169,9 +169,9 @@ const Sidebar = () => {
         } transition-all duration-300 lg:min-h-screen overflow-y-auto h-full hidden lg:flex bg-gradient-to-b from-[#000000] to-[#121212] text-white shadow-lg flex-col`}
       >
         <div className="flex items-center justify-between gap-2 px-4 py-3 font-bold text-xl bg-gradient-to-b from-[#E8C000] to-[#FFD700] text-black">
-          {!isCollapsed && (
+        {!isCollapsed && (
             <Link to="/">
-              <img src={Logo} className="h-8 w-28" />
+              <img src="/Frame 1321317498.png" className="h-8 w-28" />
             </Link>
           )}
 

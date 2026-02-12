@@ -43,7 +43,7 @@ const Header = () => {
         <button onClick={() => setSidebarOpen(true)}>
           <MdMenu className="text-2xl text-black lg:hidden block mr-2" />
         </button>
-        <img src={Logo} className="h-8 sm:h-10 md:h-12 ml-2 lg:hidden flex" />
+        <img src="/Frame 1321317498.png" className="h-8 sm:h-10 md:h-12 ml-2 lg:hidden flex" />
       </div>
 
       {/* User info and toggle button */}

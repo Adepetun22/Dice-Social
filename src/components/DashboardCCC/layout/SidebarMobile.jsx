@@ -106,7 +106,7 @@ const SidebarMobile = ({ isOpen, onClose }) => {
       >
         <div className="flex items-center justify-between gap-2 px-4 py-3 font-bold text-xl bg-gradient-to-b from-[#E8C000] to-[#FFD700] text-black">
           <Link to="/" onClick={onClose}>
-            <img src={Logo} className="h-8 w-28" />
+            <img src="/Frame 1321317498.png" className="h-8 w-28" />
           </Link>
 
           <RiMenu3Fill
