@@ -31,28 +31,6 @@ const menuItems = [
     label: "Chat Center",
     path: "/chatcenter",
   },
-  {
-    icon: <img src={Contain} className="text-[#FFD700]" />,
-    label: "Support",
-    path: "/support",
-  },
-
-  {
-    icon: <FaUser className="text-xl text-[#FFD700]" />,
-    label: "Switch to PCC",
-    path: "/PCCDashboard",
-  },
-
-  {
-    icon: <img src={Contain3} className="text-[#FFD700]" />,
-    label: "Switch to BCC",
-    path: "/BCCDashboard",
-  },
-  {
-    icon: <FaCartShopping className="text-xl text-[#FFD700]" />,
-    label: "Back to Store",
-    path: "/",
-  },
 ];
 
 const SidebarItem = ({ item, isCollapsed }) => {
