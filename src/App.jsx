@@ -5,7 +5,6 @@ import ProfileCCC from './Pages/DashboardCCC/Profile';
 import NewsFeed from './Pages/DashboardCCC/NewsFeed';
 import ChatRoomCCC from './Pages/DashboardCCC/ChatRoomCCC';
 import ChatCenter from './Pages/DashboardCCC/ChatCenter';
-import SupportPage from './Pages/DashboardCCC/Support';
 import ChatComponent from './components/ChatComponent';
 import OtherUserProfileHeader from './components/DashboardCCC/Profile/OtherUserProfileHeader';
 
@@ -23,7 +22,6 @@ function App() {
               <Route path="/newsfeed" element={<NewsFeed />} />
               <Route path="/chatroom" element={<ChatRoomCCC />} />
               <Route path="/chatcenter" element={<ChatCenter />} />
-              <Route path="/support" element={<SupportPage />} />
               <Route path="/PCCSupport/ChatRoom" element={<ChatComponent />} />
               <Route path="/other-user-profile" element={<OtherUserProfileHeader />} />
             </Routes>

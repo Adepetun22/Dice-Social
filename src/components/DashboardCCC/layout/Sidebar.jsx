@@ -185,7 +185,7 @@ const Sidebar = () => {
 
         {/* Main menu items */}
         <div className="flex flex-col h-[90vh] justify-between">
-          <div className="flex flex-col gap-1 py-2 flex-1">
+          <div className="flex flex-col gap-4 py-2 flex-1">
             {menuItems.map((item, idx) => (
               <SidebarItem key={idx} item={item} isCollapsed={isCollapsed} />
             ))}
