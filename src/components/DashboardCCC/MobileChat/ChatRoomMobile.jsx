@@ -359,7 +359,7 @@ const ChatRoomMobile = ({ onBack, contactDetails = null }) => {
         
         {/* Input Area */}
         <div 
-          className="frame-2147224246 bg-white p-[10px] border-t border-gray-200"
+          className="frame-2147224246 bg-white p-[10px] border-t border-gray-200 mb-[60px]"
           style={{ backgroundColor: 'rgb(255, 249, 230)' }}
         >
           {/* Display attached files */}

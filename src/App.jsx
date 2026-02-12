@@ -15,7 +15,7 @@ function App() {
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header />
-          <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-hidden">
             <Routes>
               <Route path="/" element={<NewsFeed />} />
               <Route path="/profile" element={<ProfileCCC />} />

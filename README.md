@@ -1,10 +1,9 @@
-# CCCNew - Ovaboss Customer Care Center
+# Dice Social
 
-A React-based Customer Care Center application built with Vite.
+Dice Social is an all-in-one social media platform where users can create posts, chat with friends, and build connections in a single, engaging environment.
 
 ## Features
 
-- Customer support chat system
 - News feed functionality
 - User profile management
 - Dashboard with sidebar navigation
@@ -40,4 +39,3 @@ npm run build
 - `src/assets/` - Static assets
 - `src/layouts/` - Layout components
 - `src/styles/` - Global styles
-

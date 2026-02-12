@@ -464,7 +464,7 @@ const ChatCenter = () => {
           </div>
         </div>
         {/* Message Input Area */}
-        <div className="frame-2147224246 bg-white p-4 border-t border-gray-200" style={{backgroundColor: '#FFF9E6'}}>
+        <div className="frame-2147224246 bg-white p-4 border-t border-gray-200 mb-[60px]" style={{backgroundColor: '#FFF9E6'}}>
           {/* Display attached files */}
           {attachedFiles.length > 0 && (
             <div className="mb-2 flex flex-wrap gap-2">
