@@ -1,5 +1,3 @@
-# Dice Social
-
 Dice Social is an all-in-one social media platform where users can create posts, chat with friends, and build connections in a single, engaging environment.
 
 ## Features
